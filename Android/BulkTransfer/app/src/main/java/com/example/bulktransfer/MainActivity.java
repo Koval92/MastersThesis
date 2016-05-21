@@ -174,6 +174,11 @@ public class MainActivity extends Activity {
                         0                            //timeout
                 );
 
+                byte readBuffer[] = new byte[64];
+                int receivedLength = 0;
+                int trialNo=0;
+                long start = System.nanoTime();
+                
                 usbResult = connection.bulkTransfer(
                         usbEndpointOut,
                         values,
@@ -181,10 +186,16 @@ public class MainActivity extends Activity {
                         0
                 );
 
-                byte readBuffer[] = new byte[64];
-                connection.bulkTransfer(usbEndpointIn, readBuffer, readBuffer.length, 0);
+                do {
+                    receivedLength = connection.bulkTransfer(usbEndpointIn, readBuffer, readBuffer.length, 0);
+                    trialNo++;
+                } while (receivedLength < 1);
+                long end = System.nanoTime();
+                double durationInMili = (end - start) / 1000000.0;
+
                 try {
                     addText("Read: " + new String(readBuffer, "UTF-8"));
+                    addText("On " + trialNo + " trial in " + String.format("%2f", durationInMili) + " ms");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
