@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.hellocdc.MainActivity">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="connect"
+        android:id="@+id/connectButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="R"
+        android:id="@+id/redButton"
+        android:layout_above="@+id/connectButton"
+        android:layout_toRightOf="@+id/connectButton"
+        android:layout_toEndOf="@+id/connectButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="G"
+        android:id="@+id/greenButton"
+        android:layout_alignBottom="@+id/redButton"
+        android:layout_toRightOf="@+id/redButton"
+        android:layout_toEndOf="@+id/redButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="B"
+        android:id="@+id/blueButton"
+        android:layout_below="@+id/redButton"
+        android:layout_alignLeft="@+id/redButton"
+        android:layout_alignStart="@+id/redButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="neg"
+        android:id="@+id/negButton"
+        android:layout_below="@+id/redButton"
+        android:layout_toRightOf="@+id/redButton"
+        android:layout_toEndOf="@+id/redButton" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/redButton"
+        android:layout_alignParentTop="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello CDC!\n"
+            android:id="@+id/consoleTextView" />
+    </ScrollView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="clear"
+        android:id="@+id/clearButton"
+        android:layout_alignBottom="@+id/redButton"
+        android:layout_alignRight="@+id/connectButton"
+        android:layout_alignEnd="@+id/connectButton" />
+</RelativeLayout>
