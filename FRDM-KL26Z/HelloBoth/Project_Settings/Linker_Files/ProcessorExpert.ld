@@ -4,13 +4,13 @@
 /*##                                   */
 /*##     Filename  : ProcessorExpert.ld */
 /*##                                   */
-/*##     Project   : HelloCDC          */
+/*##     Project   : HelloBoth         */
 /*##                                   */
 /*##     Processor : MKL26Z128VMC4     */
 /*##                                   */
 /*##     Compiler  : GNU C Compiler    */
 /*##                                   */
-/*##     Date/Time : 2016-05-10, 16:46, # CodeGen: 0 */
+/*##     Date/Time : 2016-05-21, 17:02, # CodeGen: 1 */
 /*##                                   */
 /*##     Abstract  :                   */
 /*##                                   */

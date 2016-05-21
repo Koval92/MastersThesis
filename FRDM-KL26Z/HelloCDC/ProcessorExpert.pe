@@ -2,11 +2,11 @@
 <PEproject>
   <Header>
     <Name>HelloCDC</Name>
-    <SavedBy>MICHKOWA</SavedBy>
-    <ModificationStamp>6</ModificationStamp>
-    <Date>2016-05-19</Date>
+    <SavedBy>micha</SavedBy>
+    <ModificationStamp>7</ModificationStamp>
+    <Date>2016-05-21</Date>
     <IDE>Eclipse IDE</IDE>
-    <PEversion>1.9.0.RT6_b1411-0406</PEversion>
+    <PEversion>1.9.2.RT6_b1446-0504</PEversion>
   </Header>
   <Options>
     <ProjectMainModule>main</ProjectMainModule>
@@ -6523,7 +6523,7 @@
                     <ReadOnly>false</ReadOnly>
                     <UserReadOnly>false</UserReadOnly>
                     <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-                    <Value>32</Value>
+                    <Value>64</Value>
                     <ItemWasNeverEnabledInChgScript>true</ItemWasNeverEnabledInChgScript>
                     <Base>DEC</Base>
                   </ItemState>
@@ -6826,7 +6826,7 @@
                     <ReadOnly>false</ReadOnly>
                     <UserReadOnly>false</UserReadOnly>
                     <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-                    <Value>32</Value>
+                    <Value>64</Value>
                     <ItemWasNeverEnabledInChgScript>true</ItemWasNeverEnabledInChgScript>
                     <Base>DEC</Base>
                   </ItemState>

@@ -104,7 +104,7 @@ static void SendString(const unsigned char *str, UART_Desc *desc) {
 	}
 }
 
-void reactToButton(void) {
+void reactToButton(void) { // TODO signal cdc not connected
 	if (!Button_GetVal(Button_DeviceData ) && !pressed) {
 		pressed = TRUE;
 		LED_Neg();
@@ -176,7 +176,7 @@ static void CDC_Run(void) {
 /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
 int main(void)
 /*lint -restore Enable MISRA rule (6.3) checking. */
-{
+	{
   /* Write your local variable definition here */
 
   /*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/

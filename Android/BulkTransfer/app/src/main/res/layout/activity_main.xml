@@ -8,43 +8,58 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/connectButton"
             android:layout_height="wrap_content"
             android:text="connect"
-            android:textSize="10dp"
             android:layout_width="wrap_content" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="send 32"
+            android:id="@+id/send32Button" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="send 64"
+            android:id="@+id/send64Button" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
 
         <Button
             android:id="@+id/redButton"
             android:layout_width="61dp"
             android:layout_height="wrap_content"
-            android:text="R"
-            android:textSize="10dp" />
+            android:text="R" />
 
         <Button
             android:id="@+id/greenButton"
             android:layout_width="61dp"
             android:layout_height="wrap_content"
-            android:text="G"
-            android:textSize="10dp" />
+            android:text="G" />
 
         <Button
             android:id="@+id/blueButton"
             android:layout_width="61dp"
             android:layout_height="wrap_content"
-            android:text="B"
-            android:textSize="10dp" />
+            android:text="B" />
 
         <Button
             android:id="@+id/negButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="NEG"
-            android:textSize="10dp" />
+            android:text="NEG" />
     </LinearLayout>
 
     <ScrollView

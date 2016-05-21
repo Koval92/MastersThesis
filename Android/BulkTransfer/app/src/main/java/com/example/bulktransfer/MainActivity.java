@@ -24,11 +24,13 @@ import java.util.Iterator;
 public class MainActivity extends Activity {
     private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
     private TextView logTextView;
-    private TextView infoButton;
-    private TextView redButton;
-    private TextView greenButton;
-    private TextView blueButton;
-    private TextView negButton;
+    private Button infoButton;
+    private Button redButton;
+    private Button greenButton;
+    private Button blueButton;
+    private Button negButton;
+    private Button send32Button;
+    private Button send64Button;
     private UsbDevice device = null;
     private UsbInterface usbInterface = null;
     private UsbEndpoint usbEndpointOut = null;
@@ -65,6 +67,8 @@ public class MainActivity extends Activity {
         greenButton = (Button) findViewById(R.id.greenButton);
         blueButton = (Button) findViewById(R.id.blueButton);
         negButton = (Button) findViewById(R.id.negButton);
+        send32Button = (Button) findViewById(R.id.send32Button);
+        send64Button = (Button) findViewById(R.id.send64Button);
 
         addText("Start!");
 
@@ -120,6 +124,23 @@ public class MainActivity extends Activity {
             }
         });
 
+        send32Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addText("Send32 clicked");
+                byte values[] = "String with 32 chars..987654321!".getBytes();
+                sendBytes(values);
+            }
+        });
+
+        send64Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addText("Send64 clicked");
+                byte values[] = "String with 64 chars..................................987654321!".getBytes();
+                sendBytes(values);
+            }
+        });
 
         mPermissionIntent = PendingIntent.getBroadcast(this, 0, new Intent(ACTION_USB_PERMISSION), 0);
         IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
