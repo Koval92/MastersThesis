@@ -176,9 +176,9 @@ public class MainActivity extends Activity {
 
                 byte readBuffer[] = new byte[64];
                 int receivedLength = 0;
-                int trialNo=0;
+                int trialNo = 0;
                 long start = System.nanoTime();
-                
+
                 usbResult = connection.bulkTransfer(
                         usbEndpointOut,
                         values,
