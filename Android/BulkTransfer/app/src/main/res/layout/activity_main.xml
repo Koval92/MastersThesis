@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:keepScreenOn="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/connectButton"
+            android:layout_height="wrap_content"
+            android:text="connect"
+            android:textSize="10dp"
+            android:layout_width="wrap_content" />
+
+        <Button
+            android:id="@+id/redButton"
+            android:layout_width="61dp"
+            android:layout_height="wrap_content"
+            android:text="R"
+            android:textSize="10dp" />
+
+        <Button
+            android:id="@+id/greenButton"
+            android:layout_width="61dp"
+            android:layout_height="wrap_content"
+            android:text="G"
+            android:textSize="10dp" />
+
+        <Button
+            android:id="@+id/blueButton"
+            android:layout_width="61dp"
+            android:layout_height="wrap_content"
+            android:text="B"
+            android:textSize="10dp" />
+
+        <Button
+            android:id="@+id/negButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NEG"
+            android:textSize="10dp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/logTexrView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text=""
+            android:textSize="10dp" />
+
+    </ScrollView>
+
+</LinearLayout>
+
