@@ -147,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // TODO make it work on cyanogen?
     public String getLastImagePath() {
         String path = null;
         String[] projection = {MediaStore.Images.Media.DATA};
