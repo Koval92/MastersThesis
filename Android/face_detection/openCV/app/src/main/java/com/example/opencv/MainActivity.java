@@ -61,7 +61,11 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
             os.close();
 
             // Load the cascade classifier
-            cascadeClassifier = new CascadeClassifier(mCascadeFile.getAbsolutePath());
+            cascadeClassifier = new CascadeClassifier(null); // non-parametrized isn't working
+            cascadeClassifier.load(mCascadeFile.getAbsolutePath()); // is not working, when path is in constructor
+            if(cascadeClassifier.empty()) {
+                throw new Exception("Cascade classifier is empty!");
+            }
         } catch (Exception e) {
             Log.e(TAG, "Error loading cascade", e);
         }
@@ -114,6 +118,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     @Override
     public void onResume() {
         super.onResume();
-        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_6, this, mLoaderCallback);
+        if(!OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback)) {
+            Log.e(TAG, "OpenCVLoader initAsync error!");
+        }
     }
 }
