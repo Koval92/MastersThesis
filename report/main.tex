@@ -1,25 +1,112 @@
-\documentclass{mgr}
+\documentclass[openany]{mgr} % TODO change options at the end
 
 \usepackage[T1]{fontenc}
+%\usepackage{ae,aecompl} % TODO maybe this one looks better?
+\usepackage{pslatex}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
+\usepackage[nottoc,notlot,notlof]{tocbibind}
 
 \author{Michał Kowalski} % TODO inż.?
 \supervisor{dr inż. Marek Woda} % TODO przecinek? jednostka?
-\field{Informatyka}
-\specialisation{Internet Engineering}
+\field{Informatyka (INF)}
+\specialisation{Internet Engineering (INE)}
 \title{Smartfon z systemem Android\\jako wysokopoziomowy sterownik robota}
 \engtitle{Android smartphone\\as a high-level controller of a robot}
 
 \begin{document}
 \maketitle
+\tableofcontents
 
 \chapter{Introduction}
 
+\section{Description of problem}
+
+\section{Goal of a project}
+
+\section{State of art}
+
+\chapter{Platforms}
+\section{Android}
+\section{MCU}
+
 \chapter{Communication}
+
+\section{Introduction}
+
+\section{Communication through USB cable - MCU}
+\subsection{UART}
+\subsection{CDC}
+
+\section{Communication through USB cable - Android}
+% TODO list ways
+\subsection{USB Host API}
+\subsection{mik3y}
+\subsection{felHR85}
+
+\section{Summary}
+% TODO performance and compatibility comparison
 
 \chapter{Sensors}
 
-\chapter{Summary}
+\section{Introduction}
+Modern smartphones has many sensors, and most of them can extend robot's
+functionality. Sensors differ between phones, and new (or more advanced) ones can
+be connected using possible connections (mostly USB and Bluetooth).
+Most popular ones are:
+\begin{itemize}
+  \item touch screen,
+  \item accelerometer,
+  \item gyroscope,
+  \item microphone(s),
+  \item front and rear camera(s),
+  \item position sensors:
+  \begin{itemize}
+    \item GPS,
+    \item based on GSM and WiFi,
+  \end{itemize}
+  \item magnetometer,
+  \item light sensor,
+  \item proximity sensor.
+\end{itemize}
+Some (mostly high-end, or specialized ones) have also sensors like electronic
+compass, humidity/temperature sensors, fingerprint scanner, or even thermal
+camera.
 
+\section{Face detection}
+Available implementations of face detection includes:
+\begin{itemize}
+  \item FaceDetector API,
+  \item Camera API,
+  \item openCV for Android,
+  \item openCV NDK.
+\end{itemize}
+
+% TODO short description + code samples
+
+\subsection{FaceDetector API}
+\subsection{Camera API}
+\subsection{openCV for Android}
+\subsection{openCV NDK}
+
+\section{Summary}
+% TODO performance comparison
+
+\chapter{Summary}
+% TODO summary of whole thesis
+
+\begin{thebibliography}{9}
+\bibitem{android_reference} Android Reference
+
+\bibitem{mcu_on_eclipse} MCU on Eclipse
+
+\bibitem{opencv_reference} openCV reference
+
+\bibitem{stack_overflow} Stack Overflow
+
+\bibitem{mik3y} mik3y's GitHub
+
+\bibitem{felHR85} felHR85's GitHub
+
+\end{thebibliography}
 \end{document}
