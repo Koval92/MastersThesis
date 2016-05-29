@@ -26,9 +26,12 @@ import java.io.InputStream;
 public class MainActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener {
 
     private static final String TAG = "OpenCV";
+    public static final int MAX_THREADS = 1;
     private CameraBridgeViewBase openCvCameraView;
     private CascadeClassifier cascadeClassifier;
     private Mat grayscaleImage;
+    private int threadsCount = 0;
+    private Rect[] facesArray = new Rect[0];
 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -70,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
             Log.e(TAG, "Error loading cascade", e);
         }
 
-        // And we are ready to go
         openCvCameraView.enableView();
     }
 
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
         // set camera id and max resolution
         openCvCameraView = new JavaCameraView(this, 0);
-        openCvCameraView.setMaxFrameSize(200, 150);
+        openCvCameraView.setMaxFrameSize(400, 300);
 
         setContentView(openCvCameraView);
         openCvCameraView.setCvCameraViewListener(this);
@@ -98,25 +100,35 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     }
 
     @Override
-    public Mat onCameraFrame(Mat aInputFrame) {
-        Imgproc.cvtColor(aInputFrame, grayscaleImage, Imgproc.COLOR_RGBA2RGB);
+    public Mat onCameraFrame(final Mat aInputFrame) {
+        // TODO race condition?
+        // TODO measure time between threads finish
 
-        MatOfRect faces = new MatOfRect();
+        if(threadsCount < MAX_THREADS) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    threadsCount++;
 
-        long startTime = System.nanoTime();
-        if (cascadeClassifier != null) {
-            cascadeClassifier.detectMultiScale(grayscaleImage, faces);
+                    Imgproc.cvtColor(aInputFrame, grayscaleImage, Imgproc.COLOR_RGBA2RGB);
+                    MatOfRect faces = new MatOfRect();
+
+                    long startTime = System.nanoTime();
+                    cascadeClassifier.detectMultiScale(grayscaleImage, faces);
+                    long endTime = System.nanoTime();
+                    long duration = (endTime-startTime)/1000000;
+
+                    facesArray = faces.toArray();
+                    Log.i(TAG, "Detected " + facesArray.length + " faces in " + duration + " ms");
+
+                    threadsCount--;
+                }
+            }).start();
         }
-        long endTime = System.nanoTime();
 
-        // If there are any faces found, draw a rectangle around it
-        Rect[] facesArray = faces.toArray();
-        for (int i = 0; i < facesArray.length; i++) {
-            Imgproc.rectangle(aInputFrame, facesArray[i].tl(), facesArray[i].br(), new Scalar(0, 255, 0, 255), 3);
+        for (Rect faceRect : facesArray) {
+            Imgproc.rectangle(aInputFrame, faceRect.tl(), faceRect.br(), new Scalar(0, 255, 0, 255), 3);
         }
-
-        long duration = (endTime-startTime)/1000000;
-        Log.i(TAG, "Detected " + facesArray.length + " faces in " + duration + " ms");
 
         return aInputFrame;
     }
