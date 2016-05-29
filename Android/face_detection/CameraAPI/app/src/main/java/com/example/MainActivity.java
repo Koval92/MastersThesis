@@ -62,15 +62,17 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         for(Camera.Size size : sizes) {
             allSizes = allSizes + size.width + "x" + size.height + " ";
         }
-        Log.i(TAG, "Sizes: " + allSizes);
+        Log.i(TAG, "Available preview sizes: " + allSizes);
 
-        Camera.Size selected = sizes.get(0);
+        int selectedSize = 0;
+        Camera.Size selected = sizes.get(Math.min(sizes.size()-1, selectedSize));
+        Log.i(TAG, "Selected size: " + selected.width + "x" + selected.height);
         params.setPreviewSize(selected.width,selected.height);
         mCamera.setParameters(params);
 
         mCamera.startPreview();
         mCamera.setFaceDetectionListener(new Camera.FaceDetectionListener() {
-            private long startTime = 0;
+            private long startTime = System.nanoTime();
             @Override
             public void onFaceDetection(Camera.Face[] faces, Camera camera) {
                 long currentTime = System.nanoTime();
