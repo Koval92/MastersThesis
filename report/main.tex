@@ -12,7 +12,7 @@
 % \usepackage[justification=centering]{caption} % TODO uncomment
 \usepackage{amsthm}
 \usepackage{mathtools}
-% \usepackage[bookmarks=true, breaklinks]{hyperref} % uncomment this and below
+% \usepackage[bookmarks=true, breaklinks]{hyperref} % TODO uncomment this and below 
 % \usepackage[all]{hypcap} % needed to help hyperlinks direct correctly;
 
 \newcommand{\includeimage}[2]{
@@ -61,7 +61,13 @@
 \subsection{CDC}
 
 \section{Communication through USB cable - Android}
-% TODO list ways + citation
+Three ways to communicate over USB were found:
+\begin{itemize}
+  \item USB Host API \cite{android_reference},
+  \item usb-serial-for-android library by mik3y \cite{mik3y},
+  \item UsbSerial by felHR85 \cite{felHR85}.
+\end{itemize}
+
 \subsection{USB Host API}
 \subsection{mik3y}
 \subsection{felHR85}
@@ -85,7 +91,7 @@ Most popular ones are:
   \item position sensors:
   \begin{itemize}
     \item GPS,
-    \item based on GSM and WiFi,
+    \item multilateration based on GSM and/or WiFi,
   \end{itemize}
   \item magnetometer,
   \item light sensor,
@@ -132,30 +138,49 @@ Available implementations of face detection includes:
 % TODO summary of whole thesis
 
 \begin{thebibliography}{9}
+% TODO short URLs?
 
 \bibitem{SoA1}
+Ganeev Singh, Mobile Controlled Robot,\\
 \url{engineersgarage.com/contribution/mobile-controlled-robot},
-29.05.2016
+\date{29.05.2016}
 
 \bibitem{SoA2}
-\url{roboticsbible.com/project-mobile-controlled-robot-without-microcontroller.html}, 
-29.05.2016
+Robotics Bible, Mobile Controlled Robot via GSM,\\
+\url{roboticsbible.com/project-mobile-controlled-robot-without-microcontroller.html},
+\date{29.05.2016}
 
 \bibitem{SoA3}
+Mayoogh Girish, Mobile Controlled Robot,\\
 \url{diyhacking.com/mobile-controlled-robot},
-29.05.2016
+\date{29.05.2016}
 
-\bibitem{android_reference} Android Reference
+\bibitem{android_reference} 
+Android Reference,
+\url{developer.android.com}
 
-\bibitem{mcu_on_eclipse} MCU on Eclipse
+\bibitem{mcu_on_eclipse} 
+Erich Styger, MCU on Eclipse,
+\url{mcuoneclipse.com/},
+29.04.2016
 
-\bibitem{opencv_reference} openCV reference
+\bibitem{opencv_reference} 
+openCV Reference,
+\url{http://opencv.org/}
 
-\bibitem{stack_overflow} Stack Overflow
+\bibitem{stack_overflow} 
+Stack Overflow,
+\url{http://stackoverflow.com/}
 
-\bibitem{mik3y} mik3y's GitHub
+\bibitem{mik3y} 
+Mike Wakerly, usb-serial-for-android,\\
+\url{github.com/mik3y/usb-serial-for-android},
+20.05.2016
 
-\bibitem{felHR85} felHR85's GitHub
+\bibitem{felHR85} 
+Felipe Herranz, UsbSerial,
+\url{github.com/felHR85/UsbSerial},
+20.05.2016
 
 \end{thebibliography}
 \end{document}
