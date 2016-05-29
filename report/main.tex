@@ -6,6 +6,23 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[nottoc,notlot,notlof]{tocbibind}
+\usepackage{graphicx}
+\usepackage{url}
+\urlstyle{same} % line breaks in URLs
+% \usepackage[justification=centering]{caption} % TODO uncomment
+\usepackage{amsthm}
+\usepackage{mathtools}
+% \usepackage[bookmarks=true, breaklinks]{hyperref} % uncomment this and below
+% \usepackage[all]{hypcap} % needed to help hyperlinks direct correctly;
+
+\newcommand{\includeimage}[2]{
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{img/#1}
+\caption{#2}
+\label{result:#1}
+\end{figure}
+}
 
 \author{Michał Kowalski} % TODO inż.?
 \supervisor{dr inż. Marek Woda} % TODO przecinek? jednostka?
@@ -26,6 +43,11 @@
 
 \section{State of art}
 
+\includeimage{SoA1}{robot1, \cite{SoA1} fdfsdfsdf dgfdgdf  gfhgfh }
+\includeimage{SoA2}{robot2, \cite{SoA2}}
+\includeimage{SoA3}{robot3, \cite{SoA3}}
+\includeimage{SoA0}{own robot}
+
 \chapter{Platforms}
 \section{Android}
 \section{MCU}
@@ -39,7 +61,7 @@
 \subsection{CDC}
 
 \section{Communication through USB cable - Android}
-% TODO list ways
+% TODO list ways + citation
 \subsection{USB Host API}
 \subsection{mik3y}
 \subsection{felHR85}
@@ -85,9 +107,23 @@ Available implementations of face detection includes:
 % TODO short description + code samples
 
 \subsection{FaceDetector API}
+% hard to obtain bitmap from camera
+
 \subsection{Camera API}
+% max 5 faces
+% 30 ms in good light/on screen, 60 ms in bad
+% resolution doesn't have impact on speed, only on quality
+% detection in background
+
 \subsection{openCV for Android}
+% RGB to grayscale < 1 ms
+% 300ms-1400ms @ 960x720 NO THREADS
+% 50 ms @ 144x176 NO THREADS
+% 200 ms 240x320 NO THREADS / 1 THREAD
+% detection in user's code
+
 \subsection{openCV NDK}
+% real time
 
 \section{Summary}
 % TODO performance comparison
@@ -96,6 +132,19 @@ Available implementations of face detection includes:
 % TODO summary of whole thesis
 
 \begin{thebibliography}{9}
+
+\bibitem{SoA1}
+\url{engineersgarage.com/contribution/mobile-controlled-robot},
+29.05.2016
+
+\bibitem{SoA2}
+\url{roboticsbible.com/project-mobile-controlled-robot-without-microcontroller.html}, 
+29.05.2016
+
+\bibitem{SoA3}
+\url{diyhacking.com/mobile-controlled-robot},
+29.05.2016
+
 \bibitem{android_reference} Android Reference
 
 \bibitem{mcu_on_eclipse} MCU on Eclipse
