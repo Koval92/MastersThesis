@@ -80,7 +80,10 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        // set camera id and max resolution
         openCvCameraView = new JavaCameraView(this, 0);
+        openCvCameraView.setMaxFrameSize(200, 150);
+
         setContentView(openCvCameraView);
         openCvCameraView.setCvCameraViewListener(this);
     }
@@ -96,21 +99,24 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     @Override
     public Mat onCameraFrame(Mat aInputFrame) {
-        // Create a grayscale image
         Imgproc.cvtColor(aInputFrame, grayscaleImage, Imgproc.COLOR_RGBA2RGB);
 
         MatOfRect faces = new MatOfRect();
 
-        // Use the classifier to detect faces
+        long startTime = System.nanoTime();
         if (cascadeClassifier != null) {
             cascadeClassifier.detectMultiScale(grayscaleImage, faces);
         }
+        long endTime = System.nanoTime();
 
         // If there are any faces found, draw a rectangle around it
         Rect[] facesArray = faces.toArray();
         for (int i = 0; i < facesArray.length; i++) {
             Imgproc.rectangle(aInputFrame, facesArray[i].tl(), facesArray[i].br(), new Scalar(0, 255, 0, 255), 3);
         }
+
+        long duration = (endTime-startTime)/1000000;
+        Log.i(TAG, "Detected " + facesArray.length + " faces in " + duration + " ms");
 
         return aInputFrame;
     }

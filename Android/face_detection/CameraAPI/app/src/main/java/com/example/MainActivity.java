@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.WindowManager;
 
 import java.util.List;
 
@@ -21,12 +22,13 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         mPreview = (SurfaceView)findViewById(R.id.surfaceView);
         mPreview.getHolder().addCallback(this);
         mPreview.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
-        mCamera = Camera.open(1); // 0 - back, 1 - front camera
+        mCamera = Camera.open(0); // 0 - back, 1 - front camera
     }
 
     @Override
@@ -74,9 +76,10 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
                 long currentTime = System.nanoTime();
                 long duration = (currentTime - startTime) / 1000000;
                 startTime = currentTime;
-                for(Camera.Face face : faces) {
-                    Log.i(FACE, duration + " ms: " +face.rect.flattenToString());
-                }
+                Log.i(TAG, faces.length + " faces detected in " + duration + " ms");
+//                for(Camera.Face face : faces) {
+//                    Log.i(FACE, duration + " ms: " +face.rect.flattenToString());
+//                }
             }
         });
         mCamera.startFaceDetection();
