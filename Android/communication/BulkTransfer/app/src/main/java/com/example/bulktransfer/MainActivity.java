@@ -29,7 +29,8 @@ public class MainActivity extends Activity {
     private final String TEXT64 = "String with 64 chars..................................987654321!";
     private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
     private TextView logTextView;
-    private Button infoButton;
+    private Button connectButton;
+    private Button clearButton;
     private Button redButton;
     private Button greenButton;
     private Button blueButton;
@@ -68,7 +69,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         logTextView = (TextView) findViewById(R.id.logTextView);
-        infoButton = (Button) findViewById(R.id.connectButton);
+        connectButton = (Button) findViewById(R.id.connectButton);
+        clearButton = (Button) findViewById(R.id.clearButton);
         redButton = (Button) findViewById(R.id.redButton);
         greenButton = (Button) findViewById(R.id.greenButton);
         blueButton = (Button) findViewById(R.id.blueButton);
@@ -79,7 +81,7 @@ public class MainActivity extends Activity {
 
         addText("Start!");
 
-        infoButton.setOnClickListener(new View.OnClickListener() {
+        connectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
@@ -92,6 +94,13 @@ public class MainActivity extends Activity {
                     addText(e.getLocalizedMessage() + "\n");
                     addText(e.toString() + "\n");
                 }
+            }
+        });
+
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logTextView.setText("");
             }
         });
 

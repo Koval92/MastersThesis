@@ -50,9 +50,8 @@ public class MainActivity extends AppCompatActivity {
         negButton = (Button) findViewById(R.id.negButton);
         logTextView = (TextView) findViewById(R.id.logTextView);
 
-        // TODO assign buttons
+        // TODO assign sendXX buttons
 
-        enableLEDs(false);
         setOnClickListeners();
 
         usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
@@ -112,13 +111,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void enableLEDs(boolean enable) {
-        redButton.setEnabled(enable);
-        greenButton.setEnabled(enable);
-        blueButton.setEnabled(enable);
-        negButton.setEnabled(enable);
-    }
-
     private void connect() {
         connection = usbManager.openDevice(device);
         serial = UsbSerialDevice.createUsbSerialDevice(device, connection);
@@ -142,24 +134,6 @@ public class MainActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         logTextView.append(str);
-                    }
-                });
-            }
-        });
-
-        enableLEDs(true);
-
-        connectButton.setText("disconnect");
-        connectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                serial.close();
-                enableLEDs(false);
-                connectButton.setText("connect");
-                connectButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        connect();
                     }
                 });
             }
