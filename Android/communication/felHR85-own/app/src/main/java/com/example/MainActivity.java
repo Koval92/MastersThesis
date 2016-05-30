@@ -1,6 +1,8 @@
 package com.example;
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
@@ -19,7 +21,10 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String TAG = getString(R.string.app_name);
+    private final String TAG = "felHR85-own";
+    private final String TEXT32 = "String with 32 chars..987654321!";
+    private final String TEXT50 = "String with 50 chars....................987654321!";
+    private final String TEXT64 = "String with 64 chars..................................987654321!";
     UsbSerialDevice serial;
     private UsbManager usbManager;
     private UsbDevice device;
@@ -30,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private Button greenButton;
     private Button blueButton;
     private Button negButton;
-    private TextView consoleTextView;
+    private TextView logTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
         greenButton = (Button) findViewById(R.id.greenButton);
         blueButton = (Button) findViewById(R.id.blueButton);
         negButton = (Button) findViewById(R.id.negButton);
-        consoleTextView = (TextView) findViewById(R.id.consoleTextView);
+        logTextView = (TextView) findViewById(R.id.logTextView);
+
+        // TODO assign buttons
 
         enableLEDs(false);
         setOnClickListeners();
@@ -56,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (!usbManager.hasPermission(device)) {
-            usbManager.requestPermission(device, null);
+            PendingIntent pi = PendingIntent.getBroadcast(this, 0, new Intent("perm_intent"), 0);
+            usbManager.requestPermission(device, pi);
         }
     }
 
@@ -71,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                consoleTextView.setText("");
+                logTextView.setText("");
             }
         });
 
@@ -118,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         serial.open(); // TODO move to end?
         serial.setBaudRate(9600);
         serial.setDataBits(UsbSerialInterface.DATA_BITS_8);
-        serial.setParity(UsbSerialInterface.PARITY_ODD);
+        serial.setParity(UsbSerialInterface.PARITY_NONE);
         serial.setFlowControl(UsbSerialInterface.FLOW_CONTROL_OFF);
 
         serial.read(new UsbSerialInterface.UsbReadCallback() {
@@ -133,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }
-                        consoleTextView.append(str);
+                        logTextView.append(str);
                     }
                 });
             }

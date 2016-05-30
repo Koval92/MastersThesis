@@ -20,14 +20,14 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="send 32"
-            android:id="@+id/send32Button" />
+            android:text="clear"
+            android:id="@+id/clearButton" />
 
         <Button
+            android:id="@+id/negButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="send 64"
-            android:id="@+id/send64Button" />
+            android:text="NEG" />
 
     </LinearLayout>
 
@@ -39,27 +39,48 @@
 
         <Button
             android:id="@+id/redButton"
-            android:layout_width="61dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="R" />
 
         <Button
             android:id="@+id/greenButton"
-            android:layout_width="61dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="G" />
 
         <Button
             android:id="@+id/blueButton"
-            android:layout_width="61dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="B" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
         <Button
-            android:id="@+id/negButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="NEG" />
+            android:text="send32"
+            android:id="@+id/send32Button"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="send50"
+            android:id="@+id/send50Button"
+            android:layout_gravity="right" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="send64"
+            android:id="@+id/send64Button" />
     </LinearLayout>
 
     <ScrollView
@@ -68,7 +89,7 @@
         android:layout_weight="1">
 
         <TextView
-            android:id="@+id/logTexrView"
+            android:id="@+id/logTextView"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:text=""

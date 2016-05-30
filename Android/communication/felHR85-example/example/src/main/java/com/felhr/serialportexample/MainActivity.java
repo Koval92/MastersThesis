@@ -22,6 +22,10 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final String TEXT32 = "String with 32 chars..987654321!";
+    private final String TEXT50 = "String with 50 chars....................987654321!";
+    private final String TEXT64 = "String with 64 chars..................................987654321!";
+
     /*
      * Notifications from UsbService will be received here.
      */
@@ -87,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // TODO assign buttons
     }
 
     @Override

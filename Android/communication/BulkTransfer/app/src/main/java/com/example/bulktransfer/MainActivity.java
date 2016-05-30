@@ -22,6 +22,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 public class MainActivity extends Activity {
+
+    private final String TAG = "felHR85-own";
+    private final String TEXT32 = "String with 32 chars..987654321!";
+    private final String TEXT50 = "String with 50 chars....................987654321!";
+    private final String TEXT64 = "String with 64 chars..................................987654321!";
     private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
     private TextView logTextView;
     private Button infoButton;
@@ -30,6 +35,7 @@ public class MainActivity extends Activity {
     private Button blueButton;
     private Button negButton;
     private Button send32Button;
+    private Button send50Button;
     private Button send64Button;
     private UsbDevice device = null;
     private UsbInterface usbInterface = null;
@@ -61,13 +67,14 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        logTextView = (TextView) findViewById(R.id.logTexrView);
+        logTextView = (TextView) findViewById(R.id.logTextView);
         infoButton = (Button) findViewById(R.id.connectButton);
         redButton = (Button) findViewById(R.id.redButton);
         greenButton = (Button) findViewById(R.id.greenButton);
         blueButton = (Button) findViewById(R.id.blueButton);
         negButton = (Button) findViewById(R.id.negButton);
         send32Button = (Button) findViewById(R.id.send32Button);
+        send50Button = (Button) findViewById(R.id.send50Button);
         send64Button = (Button) findViewById(R.id.send64Button);
 
         addText("Start!");
@@ -128,7 +135,16 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 addText("Send32 clicked");
-                byte values[] = "String with 32 chars..987654321!".getBytes();
+                byte values[] = TEXT32.getBytes();
+                sendBytes(values);
+            }
+        });
+
+        send50Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addText("Send50 clicked");
+                byte values[] = TEXT50.getBytes();
                 sendBytes(values);
             }
         });
@@ -137,7 +153,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 addText("Send64 clicked");
-                byte values[] = "String with 64 chars..................................987654321!".getBytes();
+                byte values[] = TEXT64.getBytes();
                 sendBytes(values);
             }
         });
@@ -149,7 +165,7 @@ public class MainActivity extends Activity {
 
     private boolean sendBytes(byte values[]) {
         try {
-            addText("Sending: " + values.toString() + " " + new String(values, "UTF-8"));
+            addText("Sending: " + new String(values, "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -212,11 +228,11 @@ public class MainActivity extends Activity {
                     trialNo++;
                 } while (receivedLength < 1);
                 long end = System.nanoTime();
-                double durationInMili = (end - start) / 1000000.0;
+                long durationInMili = (end - start) / 1000000;
 
                 try {
-                    addText("Read: " + new String(readBuffer, "UTF-8"));
-                    addText("On " + trialNo + " trial in " + String.format("%2f", durationInMili) + " ms");
+                    addText("On " + trialNo + " trial in " + durationInMili + " ms");
+                    addText("Read: " + new String(readBuffer, "UTF-8") + "\n");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
