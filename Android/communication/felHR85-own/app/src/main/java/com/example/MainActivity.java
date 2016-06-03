@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private Button send64Button;
     private TextView logTextView;
 
+    private long writeTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,51 +91,56 @@ public class MainActivity extends AppCompatActivity {
         redButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                serial.write("r".getBytes());
+                write("r");
             }
         });
 
         greenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                serial.write("g".getBytes());
+                write("g");
             }
         });
 
         blueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                serial.write("b".getBytes());
+                write("b");
             }
         });
 
         negButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                serial.write("rgb".getBytes());
+                write("rgb");
             }
         });
 
         send32Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                serial.write(TEXT32.getBytes());
+                write(TEXT32);
             }
         });
 
         send50Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                serial.write(TEXT50.getBytes());
+                write(TEXT50);
             }
         });
 
         send64Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                serial.write(TEXT64.getBytes());
+                write(TEXT64);
             }
         });
+    }
+
+    private void write(String text) {
+        writeTime = System.nanoTime();
+        serial.write(text.getBytes());
     }
 
     private void connect() {
@@ -149,6 +156,9 @@ public class MainActivity extends AppCompatActivity {
         serial.read(new UsbSerialInterface.UsbReadCallback() {
             @Override
             public void onReceivedData(final byte[] bytes) {
+                long readTime = System.nanoTime();
+                final long durationInMillis = (readTime- writeTime)/1000000;
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -158,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }
-                        logTextView.append(str);
+                        logTextView.append("Read:>>" + str + "<< after " + durationInMillis + " ms.\n");
                     }
                 });
             }
