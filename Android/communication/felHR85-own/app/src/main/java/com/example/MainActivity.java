@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     private Button greenButton;
     private Button blueButton;
     private Button negButton;
+    private Button send32Button;
+    private Button send50Button;
+    private Button send64Button;
     private TextView logTextView;
 
     @Override
@@ -49,8 +52,9 @@ public class MainActivity extends AppCompatActivity {
         blueButton = (Button) findViewById(R.id.blueButton);
         negButton = (Button) findViewById(R.id.negButton);
         logTextView = (TextView) findViewById(R.id.logTextView);
-
-        // TODO assign sendXX buttons
+        send32Button = (Button) findViewById(R.id.send32Button);
+        send50Button = (Button) findViewById(R.id.send50Button);
+        send64Button = (Button) findViewById(R.id.send64Button);
 
         setOnClickListeners();
 
@@ -107,6 +111,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 serial.write("rgb".getBytes());
+            }
+        });
+
+        send32Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serial.write(TEXT32.getBytes());
+            }
+        });
+
+        send50Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serial.write(TEXT50.getBytes());
+            }
+        });
+
+        send64Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serial.write(TEXT64.getBytes());
             }
         });
     }
