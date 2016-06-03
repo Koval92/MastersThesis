@@ -68,15 +68,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SEND 32"
-                android:id="@+id/send32Button"
-                android:layout_gravity="center_horizontal" />
+                android:id="@+id/send32Button" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SEND 50"
-                android:id="@+id/send50Button"
-                android:layout_gravity="right" />
+                android:id="@+id/send50Button" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -89,15 +87,15 @@
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/logTextView"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:text=""
-            android:textSize="10dp" />
+            android:textSize="12sp" />
 
     </ScrollView>
 
