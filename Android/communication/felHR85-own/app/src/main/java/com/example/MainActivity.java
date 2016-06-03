@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void write(String text) {
+    private void write(final String text) {
         writeTime = System.nanoTime();
         serial.write(text.getBytes());
     }
@@ -157,18 +157,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onReceivedData(final byte[] bytes) {
                 long readTime = System.nanoTime();
-                final long durationInMillis = (readTime- writeTime)/1000000;
+                long durationInMillis = (readTime- writeTime)/1000000;
+
+                String str = null;
+                try {
+                    str = new String(bytes, "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                final String msg = "Read:>>" + str + "<< after " + durationInMillis + " ms.\n";
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        String str = null;
-                        try {
-                            str = new String(bytes, "UTF-8");
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        }
-                        logTextView.append("Read:>>" + str + "<< after " + durationInMillis + " ms.\n");
+                        logTextView.append(msg);
                     }
                 });
             }
