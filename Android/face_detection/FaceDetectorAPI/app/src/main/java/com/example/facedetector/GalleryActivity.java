@@ -106,6 +106,11 @@ public class GalleryActivity extends AppCompatActivity {
         pathTextView.setText(getString(R.string.selected_path, path));
 
         Bitmap image = BitmapFactory.decodeFile(path);
+
+        if(image == null) {
+            return;
+        }
+
         int dstWidth = 400;
         int dstHeight = image.getHeight() * dstWidth / image.getWidth();
         Bitmap thumbnail = Bitmap.createScaledBitmap(image, dstWidth, dstHeight, false);
