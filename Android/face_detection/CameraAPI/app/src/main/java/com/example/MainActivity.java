@@ -12,7 +12,7 @@ import android.view.WindowManager;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements SurfaceHolder.Callback {
-    private static final String TAG = "HelloOpenCV";
+    private static final String TAG = "CameraAPI";
     private static final String FACE = "face";
 
     Camera mCamera;
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
                 long currentTime = System.nanoTime();
                 long duration = (currentTime - startTime) / 1000000;
                 startTime = currentTime;
-                Log.i(TAG, faces.length + " faces detected in " + duration + " ms");
+                Log.i(TAG, faces.length + " faces detected in [ms]: " + duration);
 //                for(Camera.Face face : faces) {
 //                    Log.i(FACE, duration + " ms: " +face.rect.flattenToString());
 //                }
