@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     private Mat grayscaleImage;
     private int threadsCount = 0;
     private Rect[] facesArray = new Rect[0];
+    private long lastTime;
 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
         // set camera id and max resolution
         openCvCameraView = new JavaCameraView(this, 0);
-        openCvCameraView.setMaxFrameSize(400, 300);
+        openCvCameraView.setMaxFrameSize(2000, 1500);
 
         setContentView(openCvCameraView);
         openCvCameraView.setCvCameraViewListener(this);
@@ -102,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     @Override
     public Mat onCameraFrame(final Mat aInputFrame) {
         // TODO race condition?
-        // TODO measure time between threads finish
 
         if(threadsCount < MAX_THREADS) {
             new Thread(new Runnable() {
@@ -113,13 +113,13 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                     Imgproc.cvtColor(aInputFrame, grayscaleImage, Imgproc.COLOR_RGBA2RGB);
                     MatOfRect faces = new MatOfRect();
 
-                    long startTime = System.nanoTime();
                     cascadeClassifier.detectMultiScale(grayscaleImage, faces);
-                    long endTime = System.nanoTime();
-                    long duration = (endTime-startTime)/1000000;
+                    long currentTime = System.nanoTime();
+                    long duration = (currentTime-lastTime)/1000000;
+                    lastTime = System.nanoTime();
 
                     facesArray = faces.toArray();
-                    Log.i(TAG, "Detected " + facesArray.length + " faces in " + duration + " ms");
+                    Log.i(TAG, aInputFrame.size() + ": detected " + facesArray.length + " faces in [ms]: " + duration);
 
                     threadsCount--;
                 }
