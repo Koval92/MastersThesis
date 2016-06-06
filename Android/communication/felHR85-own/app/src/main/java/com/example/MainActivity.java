@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView logTextView;
 
     private long writeTime;
+    private boolean hasRead = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,7 +141,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void write(final String text) {
         writeTime = System.nanoTime();
-        serial.write(text.getBytes());
+
+        while (!hasRead) {
+            continue;
+        }
+        serial.write((text).getBytes());
+        hasRead = false;
+        serial.write("q".getBytes());
+
+        long endTime = System.nanoTime();
+        long duration = (endTime-writeTime)/1000000;
+
+        logTextView.append("Executed in " + duration + "\n");
     }
 
     private void connect() {
@@ -157,20 +169,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onReceivedData(final byte[] bytes) {
                 long readTime = System.nanoTime();
-                long durationInMillis = (readTime- writeTime)/1000000;
+                final long durationInMillis = (readTime- writeTime)/1000000;
 
+                hasRead = true;
                 String str = null;
                 try {
                     str = new String(bytes, "UTF-8");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                final String msg = "Read:>>" + str + "<< after " + durationInMillis + " ms.\n";
+                final String msg = str;
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         logTextView.append(msg);
+                        if(msg != null && msg.contains("q")) {
+                            logTextView.append("Found q in " + durationInMillis);
+                        }
                     }
                 });
             }
