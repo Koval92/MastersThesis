@@ -146,9 +146,13 @@ public class MainActivity extends AppCompatActivity {
         serial.syncWrite(buffer, WRITE_TIMEOUT);
     }
 
-    private String read() { // TODO invoke method and measure time
-        byte buffer[] = new byte[64];
-        serial.syncRead(buffer, READ_TIMEOUT);
+    private String read() {
+        byte buffer[] = new byte[128];
+
+        int readBytes;
+        do {
+            readBytes = serial.syncRead(buffer, READ_TIMEOUT);
+        } while (readBytes < 1);
 
         String str = null;
         try {
@@ -156,15 +160,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-
-        final String msg = "Read:>>" + str + "<< \n";
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                logTextView.append(msg);
-            }
-        });
 
         return str;
     }
