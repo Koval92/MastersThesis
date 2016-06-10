@@ -20,9 +20,11 @@
 \centering
 \includegraphics[width=\textwidth]{img/#1}
 \caption{#2}
-\label{image:#1}
+\label{img:#1}
 \end{figure}
 }
+
+% TODO - spell-checking!
 
 \author{Michał Kowalski} % TODO inż.?
 \supervisor{dr inż. Marek Woda} % TODO przecinek? jednostka?
@@ -55,7 +57,7 @@ commands to MCU as low-level one, should be worth considering, because of:
 \begin{enumerate}
   \item Lot of memory and powerful processors.
   \item Many built-in sensors.
-  \item Many ways to communicate with surroundings, most important -
+  \item Many ways to communicate with surroundings, especially -
   with MCU.
   \item Popularity of Android platform:
   	\begin{itemize}
@@ -80,7 +82,7 @@ Found solutions should be analyzed with attention to:
   \item performance,
   \item difficulty of implementation.
 \end{itemize}
-Two Android smarphones (with different performance and Android version) will be
+Two Android smarthones (with different performance and Android version) will be
 used: Sony Ericsson Xperia Neo and Motorola Moto G LTE. They will communicate
 with MCU through USB cable, and face detection using built-in camera will be
 used as an example of extending MCU's capabilities - it requires both computing
@@ -89,35 +91,91 @@ implement this.
 
 As MCU, a Freescale FRDM KL26Z will be used. \cite{mcu_on_eclipse} is a blog
 dedicated to development on Freescale platform (mostly KL25Z, predecessor of
-KL25Z), and even contains an article how to built a mobile robot on that
-platform (img. \ref{image:frd_zumo}). It has articles how to use most of
+KL26Z), and even contains an article how to built a mobile robot on that
+platform (img. \ref{img:frd_zumo}). It has articles how to use most of
 those MCUs features, however from smartphone's point of view, only communication
 using USB port (KL25Z and KL26Z have two of them) is required.
 
-% TODO description of content?
+Because of already working solutions on Freescale's MCUs (described in
+State-of-Art section), there is no need to build an actual, working robot - it's
+proved, that those MCUs can be used as a controlling unit of a robot. Therefore,
+this thesis focuses only on making use of smartphone for detecting position of
+face (as in \ref{img:SoA0}, but with Android instead of PC) and sending text
+command to MCU (also as in \ref{img:SoA0}, but on Android, not PC).
 
-\section{State of art}
+\section{Content of thesis}
+This thesis contains:
+\begin{enumerate}
+  \item Introduction - this chapter.
+  \item Platforms - chapter describing MCU, Android, and used equipment.
+  \item Communication - chapter about communication between smartphone and MCU.
+  \item Sensors - chapter about extending robot's capabilities by using one of
+  smartphone's sensors - camera.
+  \item Summary - chapter with conclusions, whether Android smartphone can be
+  used as high-level controller.
+  \item Bibliography.
+\end{enumerate}
 
-% TODO fix labels
+\section{State of Art}
+State of Art can be divided into three different areas:
+\begin{enumerate}
+  \item Robots working on Freescale's MCU.
+  \item Robots controlled by mobile phones.
+  \item ``Face Followers''.
+\end{enumerate}
+
+\subsection{Robots working on Freescale's MCU}
+Good example of such robot can be Freedom Zumo Robot, described in one of posts
+on \cite{mcu_on_eclipse} (img. \ref{img:frd_zumo}). It's built on FRDM KL25Z,
+and Zumo Robot Kit for Arduino - KL25Z (and KL26Z probably too) is compatible with
+it.
 \includeimage{frd_zumo}{FRDM Zumo Robot, \cite{mcu_on_eclipse}}
+
+Another example could be a robot built for one of previous projects - it will be
+described later. Therefore, it's proven, that this MCU can be used for building
+(at least simple) robots.
+
+\subsection{Robots controlled by mobile phones}
+Next category are robots controlled by mobile phones, like ones shown on fig.
+\ref{img:SoA1}, \ref{img:SoA2} and \ref{img:SoA3}. It seems, that all of them
+all remotely-controlled using another phone - clicking on button during phone
+call with receiver generates a sound, which is received and transformed into
+signal in headphones' port. None of examples have any (additional) logic in
+phone. 
+
+Some examples of robots controlled by additional program on smartphones
+still exist, but most of them either are poorly documented, or are using
+smartphone only as a remote, not part of the robot. 
+
+The best example was line-following robot developed by co-students Krzysztof
+Taborski and Kamil Szyc, but it wasn't published anywhere. Part of their code
+was even used as one of methods to communicate between Android and MCU.
+
 \includeimage{SoA1}{Mobile Controlled Robot by Ganeev Singh, \cite{SoA1}}
 \includeimage{SoA2}{Mobile Controlled Robot by Robotics Bible, \cite{SoA2}}
 \includeimage{SoA3}{Mobile Controlled Robot by Mayoogh Girish, \cite{SoA3}}
+
+\subsection{``Face Followers''}
+% TODO Face Followers
+
 \includeimage{SoA0}{FaceFollower by Michał Kowalski and Adam Ćwik}
 
 \chapter{Platforms}
+
 \section{Android}
+\includeimage{xperianeo}{Sony Ericsson Xperia Neo}
+\includeimage{motog}{Motorola Moto G LTE}
+
 \section{MCU}
+\subsection{General info}
+\includeimage{MCUs}{Freescale's FRDM KL25Z (left) and KL26Z (right)}
+
+\subsection{Communication through UART}
+\subsection{Communication through CDC}
 
 \chapter{Communication}
 
 \section{Introduction}
-
-\section{Communication through USB cable - MCU}
-\subsection{UART}
-\subsection{CDC}
-
-\section{Communication through USB cable - Android}
 Three ways to communicate over USB were found:
 \begin{itemize}
   \item USB Host API \cite{android_reference},
@@ -127,9 +185,9 @@ Three ways to communicate over USB were found:
 Because of similar names of projects, they will be referenced as Host API, mik3y
 and felHR85.
 
-\subsection{USB Host API}
-\subsection{mik3y}
-\subsection{felHR85}
+\section{USB Host API}
+\section{USB Serial by mik3y}
+\section{USB Serial by felHR85}
 
 \section{Summary}
 % TODO performance and compatibility comparison
@@ -137,7 +195,7 @@ and felHR85.
 \chapter{Sensors}
 
 \section{Introduction}
-Modern smartphones has many sensors, and most of them can extend robot's
+Modern smartphones have many sensors, and most of them can extend robot's
 functionality. Sensors differ between phones, and new (or more advanced) ones can
 be connected using possible connections (mostly USB and Bluetooth).
 Most popular ones are:
@@ -174,6 +232,8 @@ Available implementations of face detection includes:
 \subsection{FaceDetector API}
 % hard to obtain bitmap from camera
 
+% TODO screenshot + code sample
+
 \subsection{Camera API}
 % max 5 faces
 % 30 ms in good light/on screen, 60 ms in bad
@@ -193,6 +253,7 @@ Available implementations of face detection includes:
 % TODO summary of whole thesis
 
 \begin{thebibliography}{9}
+% TODO sort!
 
 \bibitem{mcu_on_eclipse} 
 Erich Styger, MCU on Eclipse,
@@ -205,7 +266,7 @@ Ganeev Singh, Mobile Controlled Robot,\\
 \date{29.05.2016}
 
 \bibitem{SoA2}
-Robotics Bible, Mobile Controlled Robot via GSM,\\
+Robotics Bible, Mobile Controlled Robot,\\
 \url{roboticsbible.com/project-mobile-controlled-robot-without-microcontroller.html},
 \date{29.05.2016}
 
