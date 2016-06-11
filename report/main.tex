@@ -18,23 +18,25 @@
 \usepackage[dvipsnames]{xcolor}
 
 \newcommand{\includeimage}[2]{
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{img/#1}
-\caption{#2}
-\label{img:#1}
-\end{figure}
+	\begin{figure}
+		\centering
+		\includegraphics[width=\textwidth]{img/#1}
+		\caption{#2}
+		\label{img:#1}
+	\end{figure}
 }
 
 \lstset{
 	breaklines=true, 
 	frame=single, 
 	language=java,
+	basicstyle=\small\ttfamily,
+	breakatwhitespace=true,
 	commentstyle=\color{OliveGreen},
 	keywordstyle=\color{Black}
 }
 
-% TODO - spell-checking!
+% TODO spell-checking!
 
 \author{Michał Kowalski} % TODO inż.?
 \supervisor{dr inż. Marek Woda} % TODO przecinek? jednostka?
@@ -230,7 +232,7 @@ Some (mostly high-end, or specialized ones) have also sensors like electronic
 compass, humidity/temperature sensors, fingerprint scanner, or even thermal
 camera.
 
-% TODO
+% TODO write about face detecting
 Available implementations of face detection includes:
 \begin{itemize}
   \item FaceDetector API,
@@ -247,6 +249,8 @@ Available implementations of face detection includes:
 % TODO screenshot + code sample
 \lstinputlisting[firstline=2, lastline=19]{codesamples.java}
 
+\includeimage{facedetectorapi}{Face Detector API}
+
 \section{Camera API}
 % max 5 faces
 % 30 ms in good light/on screen, 60 ms in bad
@@ -260,8 +264,12 @@ Available implementations of face detection includes:
 
 \lstinputlisting[firstline=35, lastline=48]{codesamples.java}
 
+\includeimage{opencv_high}{openCV - high resolution}
+\includeimage{opencv_low}{openCV - low resolution}
+
 \section{openCV NDK}
 % real time?
+\includeimage{opencv_ndk}{openCV - NDK}
 
 \section{Summary}
 % TODO performance comparison
