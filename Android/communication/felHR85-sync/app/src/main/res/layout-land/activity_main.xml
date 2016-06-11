@@ -4,10 +4,10 @@
     android:layout_height="fill_parent"
     android:gravity="center_horizontal"
     android:keepScreenOn="true"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <TableLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal">
 

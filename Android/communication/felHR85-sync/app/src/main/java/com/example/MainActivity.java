@@ -24,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
     private static final int WRITE_TIMEOUT = 100;
     private static final int READ_TIMEOUT = 100;
     private final String TAG = "felHR85-own";
-    private final String TEXT32 = "String with 32 chars..987654321!";
-    private final String TEXT50 = "String with 50 chars....................987654321!";
-    private final String TEXT64 = "String with 64 chars..................................987654321!";
+    private final String TEXT_SHORT = "String with 32 chars..987654321!";
+    private final String TEXT_MEDIUM = "String with 50 chars....................987654321!";
+    private final String TEXT_LONG = "String with 64 chars..................................987654321!";
     UsbSerialDevice serial;
     private UsbManager usbManager;
     private UsbDevice device;
@@ -37,9 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private Button greenButton;
     private Button blueButton;
     private Button negButton;
-    private Button send32Button;
-    private Button send50Button;
-    private Button send64Button;
+    private Button sendShortButton;
+    private Button sendMediumButton;
+    private Button sendLongButton;
     private TextView logTextView;
 
     private long writeTime;
@@ -56,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
         blueButton = (Button) findViewById(R.id.blueButton);
         negButton = (Button) findViewById(R.id.negButton);
         logTextView = (TextView) findViewById(R.id.logTextView);
-        send32Button = (Button) findViewById(R.id.send32Button);
-        send50Button = (Button) findViewById(R.id.send50Button);
-        send64Button = (Button) findViewById(R.id.send64Button);
+        sendShortButton = (Button) findViewById(R.id.sendShortButton);
+        sendMediumButton = (Button) findViewById(R.id.sendMediumButton);
+        sendLongButton = (Button) findViewById(R.id.sendLongButton);
 
         setOnClickListeners();
 
@@ -114,28 +114,28 @@ public class MainActivity extends AppCompatActivity {
         negButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                write("rgb");
+                write("d");
             }
         });
 
-        send32Button.setOnClickListener(new View.OnClickListener() {
+        sendShortButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                write(TEXT32);
+                write(TEXT_SHORT);
             }
         });
 
-        send50Button.setOnClickListener(new View.OnClickListener() {
+        sendMediumButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                write(TEXT50);
+                write(TEXT_MEDIUM);
             }
         });
 
-        send64Button.setOnClickListener(new View.OnClickListener() {
+        sendLongButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                write(TEXT64);
+                write(TEXT_LONG);
             }
         });
     }
@@ -144,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
         byte buffer[] = text.getBytes();
         writeTime = System.nanoTime();
         serial.syncWrite(buffer, WRITE_TIMEOUT);
+        logTextView.append(read());
     }
 
     private String read() {
