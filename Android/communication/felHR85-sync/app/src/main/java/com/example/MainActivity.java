@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int WRITE_TIMEOUT = 100;
     private static final int READ_TIMEOUT = 100;
+    public static final int REPEATS = 10;
     private final String TAG = "felHR85-own";
     private final String TEXT_SHORT = "String with 32 chars..987654321!";
     private final String TEXT_MEDIUM = "String with 50 chars....................987654321!";
@@ -141,10 +142,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void write(final String text) {
+        logTextView.append("Sending " + REPEATS + " times: " + text + "\n");
         byte buffer[] = text.getBytes();
         writeTime = System.nanoTime();
-        serial.syncWrite(buffer, WRITE_TIMEOUT);
-        logTextView.append(read());
+        for(int i = 0; i< REPEATS; i++) {
+            serial.syncWrite(buffer, WRITE_TIMEOUT);
+            logTextView.append(read());
+        }
+        long endTime = System.nanoTime();
+        long durationInMillis = (endTime-writeTime)/1000000;
+
+        logTextView.append("\nExecuted in " + durationInMillis + " ms\n");
     }
 
     private String read() {
