@@ -25,9 +25,9 @@ public class MainActivity extends Activity {
 
     public static final int REPEATS = 1000;
     private final String TAG = "felHR85-own";
-    private final String TEXT_SHORT = "String with 32 chars..987654321!";
-    private final String TEXT_MEDIUM = "String with 50 chars....................987654321!";
-    private final String TEXT_LONG = "String with 64 chars..................................987654321!";
+    private final String TEXT_SHORT = "String with 32 charsBA987654321!";
+    private final String TEXT_MEDIUM = "String with 50 chars..RQPONMLKJIHGFEDCBA987654321!";
+    private final String TEXT_LONG = "String with 64 chars................RQPONMLKJIHGFEDCBA987654321!";
     private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
     private TextView logTextView;
     private Button connectButton;

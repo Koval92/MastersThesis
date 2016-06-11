@@ -22,9 +22,9 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String TEXT_SHORT = "String with 32 chars..987654321!";
-    private final String TEXT_MEDIUM = "String with 50 chars....................987654321!";
-    private final String TEXT_LONG = "String with 64 chars..................................987654321!";
+    private final String TEXT_SHORT = "String with 32 charsBA987654321!";
+    private final String TEXT_MEDIUM = "String with 50 chars..RQPONMLKJIHGFEDCBA987654321!";
+    private final String TEXT_LONG = "String with 64 chars................RQPONMLKJIHGFEDCBA987654321!";
 
     /*
      * Notifications from UsbService will be received here.

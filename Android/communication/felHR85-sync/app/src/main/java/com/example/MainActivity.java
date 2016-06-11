@@ -23,11 +23,11 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int WRITE_TIMEOUT = 100;
     private static final int READ_TIMEOUT = 100;
-    public static final int REPEATS = 10;
+    public static final int REPEATS = 100;
     private final String TAG = "felHR85-own";
-    private final String TEXT_SHORT = "String with 32 chars..987654321!";
-    private final String TEXT_MEDIUM = "String with 50 chars....................987654321!";
-    private final String TEXT_LONG = "String with 64 chars..................................987654321!";
+    private final String TEXT_SHORT = "String with 32 charsBA987654321!";
+    private final String TEXT_MEDIUM = "String with 50 chars..RQPONMLKJIHGFEDCBA987654321!";
+    private final String TEXT_LONG = "String with 64 chars................RQPONMLKJIHGFEDCBA987654321!";
     UsbSerialDevice serial;
     private UsbManager usbManager;
     private UsbDevice device;
