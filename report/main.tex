@@ -14,6 +14,8 @@
 \usepackage{mathtools}
 % \usepackage[bookmarks=true, breaklinks]{hyperref} % TODO uncomment this and below 
 % \usepackage[all]{hypcap} % needed to help hyperlinks direct correctly;
+\usepackage{listings}
+\usepackage[dvipsnames]{xcolor}
 
 \newcommand{\includeimage}[2]{
 \begin{figure}
@@ -22,6 +24,14 @@
 \caption{#2}
 \label{img:#1}
 \end{figure}
+}
+
+\lstset{
+	breaklines=true, 
+	frame=single, 
+	language=java,
+	commentstyle=\color{OliveGreen},
+	keywordstyle=\color{Black}
 }
 
 % TODO - spell-checking!
@@ -82,11 +92,11 @@ Found solutions should be analyzed with attention to:
   \item performance,
   \item difficulty of implementation.
 \end{itemize}
-Two Android smarthones (with different performance and Android version) will be
+Two Android smartphones (with different performance and Android version) will be
 used: Sony Ericsson Xperia Neo and Motorola Moto G LTE. They will communicate
 with MCU through USB cable, and face detection using built-in camera will be
 used as an example of extending MCU's capabilities - it requires both computing
-power and sensow not available in MCU, and there exists several ways to
+power and sensors not available in MCU, and there exists several ways to
 implement this.
 
 As MCU, a Freescale FRDM KL26Z will be used. \cite{mcu_on_eclipse} is a blog
@@ -220,7 +230,7 @@ Some (mostly high-end, or specialized ones) have also sensors like electronic
 compass, humidity/temperature sensors, fingerprint scanner, or even thermal
 camera.
 
-\section{Face detection}
+% TODO
 Available implementations of face detection includes:
 \begin{itemize}
   \item FaceDetector API,
@@ -231,21 +241,26 @@ Available implementations of face detection includes:
 
 % TODO short description + code samples
 
-\subsection{FaceDetector API}
+\section{FaceDetector API}
 % hard to obtain bitmap from camera
 
 % TODO screenshot + code sample
+\lstinputlisting[firstline=2, lastline=19]{codesamples.java}
 
-\subsection{Camera API}
+\section{Camera API}
 % max 5 faces
 % 30 ms in good light/on screen, 60 ms in bad
 % resolution doesn't have impact on speed, only on quality
 % detection in background
 
-\subsection{openCV for Android}
+\lstinputlisting[firstline=22, lastline=32]{codesamples.java}
+
+\section{openCV for Android}
 % detection in user's code
 
-\subsection{openCV NDK}
+\lstinputlisting[firstline=35, lastline=48]{codesamples.java}
+
+\section{openCV NDK}
 % real time?
 
 \section{Summary}
@@ -269,7 +284,7 @@ Ganeev Singh, Mobile Controlled Robot,\\
 
 \bibitem{SoA2}
 Robotics Bible, Mobile Controlled Robot,\\
-\url{roboticsbible.com/project-mobile-controlled-robot-without-microcontroller.html},
+\url{roboticsbible.com/project-mobile-controlled-robot-without-microcontroller.html},\\
 \date{29.05.2016}
 
 \bibitem{SoA3}

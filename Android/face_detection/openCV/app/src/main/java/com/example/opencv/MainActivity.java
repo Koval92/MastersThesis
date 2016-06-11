@@ -127,7 +127,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         }
 
         for (Rect faceRect : facesArray) {
-            Imgproc.rectangle(aInputFrame, faceRect.tl(), faceRect.br(), new Scalar(0, 255, 0, 255), 3);
+            Scalar color = new Scalar(0, 255, 0, 255);
+            Imgproc.rectangle(aInputFrame, faceRect.tl(), faceRect.br(), color, 3);
         }
 
         return aInputFrame;
