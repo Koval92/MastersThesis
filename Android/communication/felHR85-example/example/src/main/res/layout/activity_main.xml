@@ -71,22 +71,20 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="send 32"
-                android:id="@+id/send32Button"
-                android:layout_gravity="center_horizontal" />
+                android:text="SHORT"
+                android:id="@+id/sendShortButton" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="send 50"
-                android:id="@+id/send50Button"
-                android:layout_gravity="right" />
+                android:text="MEDIUM"
+                android:id="@+id/sendMediumButton" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="send 64"
-                android:id="@+id/send64Button" />
+                android:text="LONG"
+                android:id="@+id/sendLongButton" />
 
             <Button
                 android:layout_width="wrap_content"
