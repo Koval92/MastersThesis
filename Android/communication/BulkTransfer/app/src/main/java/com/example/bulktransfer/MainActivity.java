@@ -23,10 +23,11 @@ import java.util.Iterator;
 
 public class MainActivity extends Activity {
 
+    public static final int REPEATS = 1000;
     private final String TAG = "felHR85-own";
-    private final String TEXT32 = "String with 32 chars..987654321!";
-    private final String TEXT50 = "String with 50 chars....................987654321!";
-    private final String TEXT64 = "String with 64 chars..................................987654321!";
+    private final String TEXT_SHORT = "String with 32 chars..987654321!";
+    private final String TEXT_MEDIUM = "String with 50 chars....................987654321!";
+    private final String TEXT_LONG = "String with 64 chars..................................987654321!";
     private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
     private TextView logTextView;
     private Button connectButton;
@@ -35,9 +36,9 @@ public class MainActivity extends Activity {
     private Button greenButton;
     private Button blueButton;
     private Button negButton;
-    private Button send32Button;
-    private Button send50Button;
-    private Button send64Button;
+    private Button sendShortButton;
+    private Button sendMediumButton;
+    private Button sendLongButton;
     private UsbDevice device = null;
     private UsbInterface usbInterface = null;
     private UsbEndpoint usbEndpointOut = null;
@@ -75,18 +76,16 @@ public class MainActivity extends Activity {
         greenButton = (Button) findViewById(R.id.greenButton);
         blueButton = (Button) findViewById(R.id.blueButton);
         negButton = (Button) findViewById(R.id.negButton);
-        send32Button = (Button) findViewById(R.id.send32Button);
-        send50Button = (Button) findViewById(R.id.send50Button);
-        send64Button = (Button) findViewById(R.id.send64Button);
-
-        addText("Start!");
+        sendShortButton = (Button) findViewById(R.id.sendShortButton);
+        sendMediumButton = (Button) findViewById(R.id.sendMediumButton);
+        sendLongButton = (Button) findViewById(R.id.sendLongButton);
 
         connectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
                     checkDeviceInfo();
-                    addText("\n\n");
+                    addText(null);
                     readDescriptors();
                 } catch (Exception e) {
                     addText("\n---Error 0!\n");
@@ -106,64 +105,50 @@ public class MainActivity extends Activity {
 
         redButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                addText("RED clicked");
-                byte values[] = "r".getBytes();
-                sendBytes(values);
+            public void onClick(View v) {
+                sendString("r");
             }
         });
 
         greenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addText("GREEN clicked");
-                byte values[] = "g".getBytes();
-                sendBytes(values);
+                sendString("g");
             }
         });
 
         blueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addText("BLUE clicked");
-                byte values[] = "b".getBytes();
-                sendBytes(values);
+                sendString("b");
             }
         });
 
         negButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addText("NEG clicked");
-                byte values[] = "d".getBytes();
-                sendBytes(values);
+                sendString("d");
             }
         });
 
-        send32Button.setOnClickListener(new View.OnClickListener() {
+        sendShortButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addText("Send32 clicked");
-                byte values[] = TEXT32.getBytes();
-                sendBytes(values);
+                sendString(TEXT_SHORT);
             }
         });
 
-        send50Button.setOnClickListener(new View.OnClickListener() {
+        sendMediumButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addText("Send50 clicked");
-                byte values[] = TEXT50.getBytes();
-                sendBytes(values);
+                sendString(TEXT_MEDIUM);
             }
         });
 
-        send64Button.setOnClickListener(new View.OnClickListener() {
+        sendLongButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addText("Send64 clicked");
-                byte values[] = TEXT64.getBytes();
-                sendBytes(values);
+                sendString(TEXT_LONG);
             }
         });
 
@@ -172,12 +157,10 @@ public class MainActivity extends Activity {
         registerReceiver(mUsbReceiver, filter);
     }
 
-    private boolean sendBytes(byte values[]) {
-        try {
-            addText("Sending: " + new String(values, "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+    private boolean sendString(String text) {
+        byte bytes[] = text.getBytes();
+        addText("Sending " + REPEATS + " time(s): " + text);
+
         if (device == null) {
             addText("-----Error: no device!");
             return false;
@@ -220,31 +203,36 @@ public class MainActivity extends Activity {
                         0                            //timeout
                 );
 
-                byte readBuffer[] = new byte[64];
-                int receivedLength = 0;
                 int trialNo = 0;
                 long start = System.nanoTime();
+                for(int i = 0; i< REPEATS; i++) {
+                    byte readBuffer[] = new byte[64];
+                    int receivedLength = 0;
+                    trialNo = 0;
 
-                usbResult = connection.bulkTransfer(
-                        usbEndpointOut,
-                        values,
-                        values.length,
-                        0
-                );
+                    usbResult = connection.bulkTransfer(
+                            usbEndpointOut,
+                            bytes,
+                            bytes.length,
+                            0
+                    );
 
-                do {
-                    receivedLength = connection.bulkTransfer(usbEndpointIn, readBuffer, readBuffer.length, 0);
-                    trialNo++;
-                } while (receivedLength < 1);
+                    do {
+                        receivedLength = connection.bulkTransfer(usbEndpointIn, readBuffer, readBuffer.length, 0);
+                        trialNo++;
+                    } while (receivedLength < 1);
+                    try {
+                        addText(new String(readBuffer, "UTF-8"));
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
                 long end = System.nanoTime();
                 long durationInMili = (end - start) / 1000000;
-
-                try {
-                    addText("On " + trialNo + " trial in " + durationInMili + " ms");
-                    addText("Read: " + new String(readBuffer, "UTF-8") + "\n");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+                if(REPEATS == 1) {
+                    addText("On " + trialNo + " trial");
                 }
+                addText("Executed in " + durationInMili + " ms");
 
                 return (usbResult > 0);
             } else {
@@ -345,7 +333,7 @@ public class MainActivity extends Activity {
         while (deviceIterator.hasNext()) {
             device = deviceIterator.next();
 
-            addText("\n\n---New device:");
+            addText("---New device:");
             addText("-----DeviceID:" + device.getDeviceId());
             addText("-----DeviceName:" + device.getDeviceName());
             addText("-----DeviceClass:" + device.getDeviceClass());
@@ -408,6 +396,6 @@ public class MainActivity extends Activity {
     }
 
     private void addText(String text) {
-        logTextView.append("\n" + text);
+        logTextView.append(text + "\n");
     }
 }

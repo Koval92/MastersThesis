@@ -4,10 +4,10 @@
     android:layout_height="fill_parent"
     android:gravity="center_horizontal"
     android:keepScreenOn="true"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <TableLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal">
 
@@ -19,22 +19,19 @@
                 android:id="@+id/connectButton"
                 android:layout_height="wrap_content"
                 android:text="CONNECT"
-                android:layout_width="wrap_content"
-                android:layout_column="0" />
+                android:layout_width="wrap_content" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CLEAR"
-                android:id="@+id/clearButton"
-                android:layout_column="1" />
+                android:id="@+id/clearButton" />
 
             <Button
                 android:id="@+id/negButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NEG"
-                android:layout_column="2" />
+                android:text="NEG" />
         </TableRow>
 
         <TableRow
@@ -87,8 +84,7 @@
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_weight="1"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/logTextView"
