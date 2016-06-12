@@ -158,7 +158,7 @@ public class MainActivity extends Activity {
     }
 
     private boolean sendString(String text) {
-        byte bytes[] = text.getBytes();
+        byte writeBuffer[] = text.getBytes();
         addText("Sending: " + text);
 
         if (device == null) {
@@ -210,12 +210,7 @@ public class MainActivity extends Activity {
                     int receivedLength = 0;
                     trialNo = 0;
 
-                    usbResult = connection.bulkTransfer(
-                            usbEndpointOut,
-                            bytes,
-                            bytes.length,
-                            0
-                    );
+                    usbResult = connection.bulkTransfer(usbEndpointOut, writeBuffer, writeBuffer.length, 0);
 
                     do {
                         receivedLength = connection.bulkTransfer(usbEndpointIn, readBuffer, readBuffer.length, 0);
