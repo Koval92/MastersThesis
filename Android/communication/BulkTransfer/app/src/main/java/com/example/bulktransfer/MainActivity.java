@@ -23,7 +23,7 @@ import java.util.Iterator;
 
 public class MainActivity extends Activity {
 
-    public static final int REPEATS = 1000;
+    public static final int REPEATS = 100;
     private final String TAG = "felHR85-own";
     private final String TEXT_SHORT = "String with 32 charsBA987654321!";
     private final String TEXT_MEDIUM = "String with 50 chars..RQPONMLKJIHGFEDCBA987654321!";
@@ -159,7 +159,7 @@ public class MainActivity extends Activity {
 
     private boolean sendString(String text) {
         byte bytes[] = text.getBytes();
-        addText("Sending " + REPEATS + " time(s): " + text);
+        addText("Sending: " + text);
 
         if (device == null) {
             addText("-----Error: no device!");
@@ -222,7 +222,7 @@ public class MainActivity extends Activity {
                         trialNo++;
                     } while (receivedLength < 1);
                     try {
-                        addText(new String(readBuffer, "UTF-8"));
+                        logTextView.append(new String(readBuffer, "UTF-8"));
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
@@ -232,7 +232,7 @@ public class MainActivity extends Activity {
                 if(REPEATS == 1) {
                     addText("On " + trialNo + " trial");
                 }
-                addText("Executed in " + durationInMili + " ms");
+                addText("Executed " + REPEATS + " time(s) in " + durationInMili + " ms");
 
                 return (usbResult > 0);
             } else {

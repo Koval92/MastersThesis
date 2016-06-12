@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void write(final String text) {
-        logTextView.append("Sending " + REPEATS + " time(s): " + text + "\n");
+        logTextView.append("Sending: " + text + "\n");
         writeTime = System.nanoTime();
 
         for(int i=0; i<REPEATS; i++) {
@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         logTextView.append(msg);
                         if(msg != null && msg.contains("q")) {
-                            logTextView.append("\nExecuted in [ms]: " + durationInMillis + "\n");
+                            logTextView.append("\nExecuted " + REPEATS + " time(s) in [ms]: " + durationInMillis + "\n");
                         }
                     }
                 });

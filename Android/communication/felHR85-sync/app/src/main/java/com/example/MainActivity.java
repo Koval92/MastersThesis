@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void write(final String text) {
-        logTextView.append("Sending " + REPEATS + " times: " + text + "\n");
+        logTextView.append("Sending: " + text + "\n");
         byte buffer[] = text.getBytes();
         writeTime = System.nanoTime();
         for(int i = 0; i< REPEATS; i++) {
@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         long endTime = System.nanoTime();
         long durationInMillis = (endTime-writeTime)/1000000;
 
-        logTextView.append("\nExecuted in " + durationInMillis + " ms\n");
+        logTextView.append("\nExecuted " + REPEATS + " times in " + durationInMillis + " ms\n");
     }
 
     private String read() {
