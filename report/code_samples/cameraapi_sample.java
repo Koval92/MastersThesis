@@ -4,7 +4,7 @@ mCamera.setFaceDetectionListener(new Camera.FaceDetectionListener() {
 	public void onFaceDetection(Camera.Face[] faces, Camera camera) {
 		// no easy way to display it on image
 		for(Camera.Face face : faces) {
-			Log.i(FACE, duration + " ms: " +face.rect.flattenToString());
+			Log.i(FACE, face.rect.flattenToString());
 		}
 	}
 });

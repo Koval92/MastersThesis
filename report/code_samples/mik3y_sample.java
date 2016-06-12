@@ -13,7 +13,7 @@ if (connection == null) {
 UsbSerialPort port = driver.getPorts.get(0);
 port.open(connection);
 try {
-  port.setParameters(/*int baudRate, int dataBits, int stopBits, int parity*/);
+  port.setParameters(baudRate, dataBits, stopBits, parity);
   byte writeBuffer[] = "text".getBytes();
   byte readBuffer[] = new byte[16];
   int numBytesWritten = port.write(writeBuffer, TIMEOUT)
