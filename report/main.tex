@@ -16,22 +16,17 @@
 % \usepackage[all]{hypcap} % needed to help hyperlinks direct correctly;
 \usepackage{listings}
 \usepackage[dvipsnames]{xcolor}
-\usepackage{xifthen}
 \usepackage{xargs}
 
 % 1 - optional width
 % 2 - filename
 % 3 - caption in List of Figures and under picture
 % 4 - optional caption after #3
-\newcommandx{\includeimage}[4][1=1, 4=\@empty]{
+\newcommandx{\includeimage}[4][1=1, 4=\empty]{
 	\begin{figure}
 		\centering
 		\includegraphics[width=#1\textwidth]{img/#2}
-		\caption[#3]{
-			\ifthenelse{\equal{#4}{\@empty}}
-				{#3}
-				{#3\\#4}
-		}
+		\caption[#3]{#3#4}
 		\label{img:#2}
 	\end{figure}
 }
@@ -211,8 +206,17 @@ Because of similar names of projects, they will be referenced as Host API, mik3y
 and felHR85.
 
 \section{USB Host API}
+
+\lstinputlisting{code_samples/bulktransfer_sample.java}
+
 \section{USB Serial by mik3y}
+
+\lstinputlisting{code_samples/mik3y_sample.java}
+
 \section{USB Serial by felHR85}
+
+\lstinputlisting{code_samples/felhr85async_sample.java}
+\lstinputlisting{code_samples/felhr85sync_sample.java}
 
 \section{Summary}
 % TODO performance and compatibility comparison
@@ -258,7 +262,7 @@ Available implementations of face detection includes:
 % hard to obtain bitmap from camera
 
 % TODO screenshot + code sample
-\lstinputlisting[firstline=2, lastline=19]{codesamples.java}
+\lstinputlisting{code_samples/facedetectorapi_sample.java}
 
 \includeimage[0.4]{facedetectorapi}{Face Detector API}
 
@@ -268,12 +272,12 @@ Available implementations of face detection includes:
 % resolution doesn't have impact on speed, only on quality
 % detection in background
 
-\lstinputlisting[firstline=22, lastline=32]{codesamples.java}
+\lstinputlisting{code_samples/cameraapi_sample.java}
 
 \section{openCV for Android}
 % detection in user's code
 
-\lstinputlisting[firstline=35, lastline=48]{codesamples.java}
+\lstinputlisting{code_samples/opencv_sample.java}
 
 \includeimage{opencv_high}{openCV - high resolution}
 \includeimage{opencv_low}{openCV - low resolution}
