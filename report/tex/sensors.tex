@@ -1,0 +1,70 @@
+\chapter{Sensors}
+
+\section{Introduction}
+Modern smartphones have many sensors, and most of them can extend robot's
+functionality. Sensors differ between phones, and new (or more advanced) ones can
+be connected using possible connections (mostly USB and Bluetooth).
+Most popular ones are:
+\begin{itemize}
+  \item touch screen,
+  \item accelerometer,
+  \item gyroscope,
+  \item microphone(s),
+  \item front and rear camera(s),
+  \item position sensors:
+  \begin{itemize}
+    \item GPS,
+    \item multilateration based on GSM and/or WiFi,
+  \end{itemize}
+  \item magnetometer,
+  \item light sensor,
+  \item proximity sensor.
+\end{itemize}
+Some (mostly high-end, or specialized ones) have also sensors like electronic
+compass, humidity/temperature sensors, fingerprint scanner, or even thermal
+camera.
+
+% TODO write about face detecting
+Available implementations of face detection includes:
+\begin{itemize}
+  \item FaceDetector API,
+  \item Camera API,
+  \item OpenCV for Android,
+  \item OpenCV NDK.
+\end{itemize}
+
+% TODO short description
+
+\section{FaceDetector API}
+% hard to obtain bitmap from camera
+
+% TODO screenshot + code sample
+\lstinputlisting[float, label=lst:fdapi, caption=Face Detector API]
+{../code_samples/facedetectorapi_sample.java}
+
+\includeimage[0.4]{facedetectorapi}{Face Detector API}
+
+\section{Camera API}
+% max 5 faces
+% 30 ms in good light/on screen, 60 ms in bad
+% resolution doesn't have impact on speed, only on quality
+% detection in background
+
+\lstinputlisting[float, label=lst:cameraapi, caption=Camera API]
+{../code_samples/cameraapi_sample.java}
+
+\section{OpenCV for Android}
+% detection in user's code
+
+\lstinputlisting[float, label=lst:opencv, caption=OpenCV]
+{../code_samples/opencv_sample.java}
+
+\includeimage{opencv_high}{openCV - high resolution}
+\includeimage{opencv_low}{openCV - low resolution}
+
+\section{OpenCV NDK}
+% real time?
+\includeimage{opencv_ndk}{openCV - NDK}
+
+\section{Summary}
+% TODO pros and cos of each method

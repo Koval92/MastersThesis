@@ -1,0 +1,115 @@
+\documentclass[openany]{mgr} % TODO change options at the end
+
+\usepackage[T1]{fontenc}
+%\usepackage{ae,aecompl} % TODO maybe this one looks better?
+\usepackage{pslatex}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[nottoc,notlot,notlof]{tocbibind}
+\usepackage{graphicx}
+\usepackage{url}
+\urlstyle{same} % line breaks in URLs
+\usepackage[justification=centering]{caption}
+\usepackage{amsthm}
+\usepackage{mathtools}
+% \usepackage[bookmarks=true, breaklinks]{hyperref} % TODO uncomment this and below 
+% \usepackage[all]{hypcap} % needed to help hyperlinks direct correctly;
+\usepackage{listings}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{xargs}
+
+% 1 - optional width
+% 2 - filename
+% 3 - caption in List of Figures and under picture
+% 4 - optional caption after #3
+\newcommandx{\includeimage}[4][1=1, 4=\empty]{
+	\begin{figure}
+		\centering
+		\includegraphics[width=#1\textwidth]{../img/#2}
+		\caption[#3]{#3#4}
+		\label{img:#2}
+	\end{figure}
+}
+
+\lstset{
+	tabsize=4,
+	breaklines=true, 
+	frame=single, 
+	language=java,
+	basicstyle=\small\ttfamily,
+	breakatwhitespace=true,
+	commentstyle=\color{OliveGreen},
+	keywordstyle=\color{Black}
+}
+
+% TODO spell-checking!
+
+\author{Michał Kowalski} % TODO inż.?
+\supervisor{dr inż. Marek Woda} % TODO przecinek? jednostka?
+\field{Informatyka (INF)}
+\specialisation{Internet Engineering (INE)}
+\title{Smartfon z systemem Android\\jako wysokopoziomowy sterownik robota}
+\engtitle{Android smartphone\\as a high-level controller of a robot}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\listoffigures
+
+\include{introduction}
+
+\include{platforms}
+
+\include{communication}
+
+\include{sensors}
+
+\include{summary}
+
+\begin{thebibliography}{9}
+% TODO sort!
+
+\bibitem{mcu_on_eclipse} 
+Erich Styger, MCU on Eclipse,
+\url{mcuoneclipse.com/},
+29.04.2016
+
+\bibitem{SoA1}
+Ganeev Singh, Mobile Controlled Robot,\\
+\url{engineersgarage.com/contribution/mobile-controlled-robot},
+\date{29.05.2016}
+
+\bibitem{SoA2}
+Robotics Bible, Mobile Controlled Robot,\\
+\url{roboticsbible.com/project-mobile-controlled-robot-without-microcontroller.html},\\
+\date{29.05.2016}
+
+\bibitem{SoA3}
+Mayoogh Girish, Mobile Controlled Robot,\\
+\url{diyhacking.com/mobile-controlled-robot},
+\date{29.05.2016}
+
+\bibitem{android_reference} 
+Google Inc., Android Reference,
+\url{developer.android.com}
+
+\bibitem{opencv_reference} 
+Itseez Inc., OpenCV Reference,
+\url{http://opencv.org/}
+
+\bibitem{stack_overflow} 
+Stack Overflow,
+\url{http://stackoverflow.com/}
+
+\bibitem{mik3y} 
+Mike Wakerly, usb-serial-for-android,\\
+\url{github.com/mik3y/usb-serial-for-android},
+20.05.2016
+
+\bibitem{felHR85} 
+Felipe Herranz, UsbSerial,
+\url{github.com/felHR85/UsbSerial},
+20.05.2016
+
+\end{thebibliography}
+\end{document}

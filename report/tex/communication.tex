@@ -1,0 +1,142 @@
+\chapter{Communication}
+
+\section{Introduction}
+Three ways to communicate over USB were found:
+\begin{itemize}
+  \item USB Host API \cite{android_reference},
+  \item usb-serial-for-android library by mik3y \cite{mik3y},
+  \item UsbSerial by felHR85 \cite{felHR85}.
+\end{itemize}
+Because of similar names of projects, they will be referenced as Host API,
+mik3y and felHR85.
+
+% TODO all screenshots on xperia
+
+\section{USB Host API}
+
+\lstinputlisting[float, label=lst:usbhostapi, caption=USB Host API]
+{../code_samples/bulktransfer_sample.java}
+
+\includeimage{comm/bulk/bulk_1}{USB Host API - sending 1 letter}
+[\\Received text is correct. As it can be seen, in this test it takes about 22
+ms to get an echo of each sent message. Although, during other (not documented
+with screenshot) tests, sometimes (but less often) average duration was about 12
+ms.]
+
+\includeimage{comm/bulk/bulk_32}{USB Host API - sending 32 letters}
+[\\Received text is correct. Average time of execution was 12 ms, but in other
+tests, it also happened (but less often) to be 22 ms.]
+
+\includeimage{comm/bulk/bulk_50}{USB Host API - sending 50 letters}
+[\\Received text is correct. Average time of execution was 12 ms, but in
+opposition to sending 1 or 32 letters, other values were not observed.]
+
+\includeimage{comm/bulk/bulk_64}{USB Host API - sending 64 letters}
+[\\Received text is NOT correct. Only first message is received completely, but
+sent from MCU as two. Next ones are missing last character.]
+
+\section{USB Serial by mik3y}
+
+\lstinputlisting[float, label=lst:mik3y, caption=mik3y]
+{../code_samples/mik3y_sample.java}
+
+\section{USB Serial by felHR85}
+
+\subsection{Asynchronous mode}
+
+\lstinputlisting[float, label=lst:async, caption=felHR85 async]
+{../code_samples/felhr85async_sample.java}
+
+\includeimage{comm/async/async_cdc_1}{felHR85, async-cdc, 1 letter}
+[]
+
+\includeimage{comm/async/async_cdc_32}{felHR85, async-cdc, 32 letters}
+[]
+
+\includeimage{comm/async/async_cdc_50}{felHR85, async-cdc, 50 letters}
+[]
+
+\includeimage{comm/async/async_cdc_64}{felHR85, async-cdc, 64 letters}
+[]
+
+\includeimage{comm/async/async_cdc_70}{felHR85, async-cdc, 70 letters}
+[]
+
+\includeimage{comm/async/async_uart_1}{felHR85, async-uart, 1 letter}
+[]
+
+\includeimage{comm/async/async_uart_32}{felHR85, async-uart, 32 letters}
+[]
+
+\includeimage{comm/async/async_uart_50}{felHR85, async-uart, 50 letters}
+[]
+
+\includeimage{comm/async/async_uart_64}{felHR85, async-uart, 64 letters}
+[]
+
+\includeimage{comm/async/async_uart_70}{felHR85, async-uart, 70 letters}
+[]
+
+\clearpage
+
+\subsection{Synchronous mode}
+
+\lstinputlisting[float, label=lst:sync, caption=felHR85 sync]
+{../code_samples/felhr85sync_sample.java}
+
+\includeimage{comm/sync/sync_cdc_1}{felHR85, sync-cdc, 1 letter}
+[]
+
+\includeimage{comm/sync/sync_cdc_32}{felHR85, sync-cdc, 32 letters}
+[]
+
+\includeimage{comm/sync/sync_cdc_50}{felHR85, sync-cdc, 50 letters}
+[]
+
+\includeimage{comm/sync/sync_cdc_64}{felHR85, sync-cdc, 64 letters}
+[]
+
+\includeimage{comm/sync/sync_uart_1}{felHR85, sync-uart, 1 letter}
+[]
+
+\includeimage{comm/sync/sync_uart_32}{felHR85, sync-uart, 32 letters (1)}
+[]
+
+\includeimage{comm/sync/sync_uart_32_2}{felHR85, sync-uart, 32 letters (2)}
+[]
+
+\includeimage{comm/sync/sync_uart_50}{felHR85, sync-uart, 50 letters (1)}
+[]
+
+\includeimage{comm/sync/sync_uart_50_2}{felHR85, sync-uart, 50 letters (2)}
+[]
+
+\includeimage{comm/sync/sync_uart_64}{felHR85, sync-uart, 64 letters}
+[]
+
+\includeimage{comm/sync/sync_uart_70}{felHR85, sync-uart, 70 letters (1)}
+[]
+
+\includeimage{comm/sync/sync_uart_70_2}{felHR85, sync-uart, 70 letters (2)}
+[]
+
+\clearpage
+
+\subsection{Division of messages}
+
+\includeimage{comm/div/div_async_cdc}{Division of message: async-cdc (1)}
+[]
+
+\includeimage{comm/div/div_async_cdc2}{Division of message: async-cdc (2)}
+[]
+
+\includeimage{comm/div/div_async_uart}{Division of message: async-uart}
+[]
+
+\includeimage{comm/div/div_sync_uart}{Division of message: sync-uart}
+[]
+
+% TODO sync-cdc?
+
+\section{Summary}
+% TODO tables with performance and pros/cons comparison
