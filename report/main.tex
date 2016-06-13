@@ -32,6 +32,7 @@
 }
 
 \lstset{
+	tabsize=4,
 	breaklines=true, 
 	frame=single, 
 	language=java,
@@ -116,10 +117,10 @@ using USB port (KL25Z and KL26Z have two of them) is required.
 
 Because of already working solutions on Freescale's MCUs (described in
 State-of-Art section), there is no need to build an actual, working robot - it's
-proved, that those MCUs can be used as a controlling unit of a robot. Therefore,
+proven, that those MCUs can be used as a controlling unit of a robot. Therefore,
 this thesis focuses only on making use of smartphone for detecting position of
-face (as in \ref{img:SoA0}, but with Android instead of PC) and sending text
-command to MCU (also as in \ref{img:SoA0}, but on Android, not PC).
+face (as in robot on img. \ref{img:SoA0}, but with Android instead of PC) and
+sending text command to MCU (also as in \ref{img:SoA0}, but on Android, not PC).
 
 \section{Content of thesis}
 This thesis contains:
@@ -205,18 +206,26 @@ Three ways to communicate over USB were found:
 Because of similar names of projects, they will be referenced as Host API, mik3y
 and felHR85.
 
+% TODO all screenshots on xperia
+% TODO table with comparison
+
 \section{USB Host API}
 
-\lstinputlisting{code_samples/bulktransfer_sample.java}
+\lstinputlisting[float, label=lst:usbhostapi, caption=USB Host API]
+{code_samples/bulktransfer_sample.java}
 
 \section{USB Serial by mik3y}
 
-\lstinputlisting{code_samples/mik3y_sample.java}
+\lstinputlisting[float, label=lst:mik3y, caption=mik3y]
+{code_samples/mik3y_sample.java}
 
 \section{USB Serial by felHR85}
 
-\lstinputlisting{code_samples/felhr85async_sample.java}
-\lstinputlisting{code_samples/felhr85sync_sample.java}
+\lstinputlisting[float, label=lst:async, caption=felHR85 async]
+{code_samples/felhr85async_sample.java}
+
+\lstinputlisting[float, label=lst:sync, caption=felHR85 sync]
+{code_samples/felhr85sync_sample.java}
 
 \section{Summary}
 % TODO performance and compatibility comparison
@@ -262,7 +271,8 @@ Available implementations of face detection includes:
 % hard to obtain bitmap from camera
 
 % TODO screenshot + code sample
-\lstinputlisting{code_samples/facedetectorapi_sample.java}
+\lstinputlisting[float, label=lst:fdapi, caption=Face Detector API]
+{code_samples/facedetectorapi_sample.java}
 
 \includeimage[0.4]{facedetectorapi}{Face Detector API}
 
@@ -272,12 +282,14 @@ Available implementations of face detection includes:
 % resolution doesn't have impact on speed, only on quality
 % detection in background
 
-\lstinputlisting{code_samples/cameraapi_sample.java}
+\lstinputlisting[float, label=lst:cameraapi, caption=Camera API]
+{code_samples/cameraapi_sample.java}
 
 \section{OpenCV for Android}
 % detection in user's code
 
-\lstinputlisting{code_samples/opencv_sample.java}
+\lstinputlisting[float, label=lst:opencv, caption=OpenCV]
+{code_samples/opencv_sample.java}
 
 \includeimage{opencv_high}{openCV - high resolution}
 \includeimage{opencv_low}{openCV - low resolution}

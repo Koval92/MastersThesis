@@ -7,19 +7,19 @@ List<UsbSerialDriver> availableDrivers = prober.findAllDrivers(manager);
 UsbSerialDriver driver = availableDrivers.get(0);
 UsbDeviceConnection connection = manager.openDevice(driver.getDevice());
 if (connection == null) {
-  // probably need to call UsbManager.requestPermission(driver.getDevice(), ..)
-  return;
+	// probably need to call UsbManager.requestPermission(driver.getDevice(), ..)
+	return;
 }
 UsbSerialPort port = driver.getPorts.get(0);
 port.open(connection);
 try {
-  port.setParameters(baudRate, dataBits, stopBits, parity);
-  byte writeBuffer[] = "text".getBytes();
-  byte readBuffer[] = new byte[16];
-  int numBytesWritten = port.write(writeBuffer, TIMEOUT)
-  int numBytesRead = port.read(readBuffer, TIMEOUT);
+	port.setParameters(baudRate, dataBits, stopBits, parity);
+	byte writeBuffer[] = "text".getBytes();
+	byte readBuffer[] = new byte[16];
+	int numBytesWritten = port.write(writeBuffer, TIMEOUT)
+	int numBytesRead = port.read(readBuffer, TIMEOUT);
 } catch (IOException e) {
-  // Deal with error.
+	// Deal with error.
 } finally {
-  port.close();
+	port.close();
 }

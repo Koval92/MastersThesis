@@ -11,11 +11,11 @@ serial.setDataBits(UsbSerialInterface.DATA_BITS_8);
 serial.setParity(UsbSerialInterface.PARITY_ODD);
 serial.setFlowControl(UsbSerialInterface.FLOW_CONTROL_OFF); 
 serial.read(new UsbSerialInterface.UsbReadCallback() {
-            @Override
-            public void onReceivedData(final byte[] bytes) {
-				// to domething with bytes, like: 
-				String str = new String(bytes, "UTF-8");
-			}
-        });
+    @Override
+    public void onReceivedData(final byte[] bytes) {
+		// to domething with bytes, like: 
+		String str = new String(bytes, "UTF-8");
+	}
+});
 serial.write("TEXT".getBytes());
 serial.close();
