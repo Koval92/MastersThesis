@@ -7,7 +7,8 @@ List<UsbSerialDriver> availableDrivers = prober.findAllDrivers(manager);
 UsbSerialDriver driver = availableDrivers.get(0);
 UsbDeviceConnection connection = manager.openDevice(driver.getDevice());
 if (connection == null) {
-	// probably need to call UsbManager.requestPermission(driver.getDevice(), ..)
+	// probably lacks permission
+	UsbManager.requestPermission(driver.getDevice(), ...)
 	return;
 }
 UsbSerialPort port = driver.getPorts.get(0);
