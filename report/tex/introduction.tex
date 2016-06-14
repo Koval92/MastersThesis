@@ -87,7 +87,7 @@ State of Art can be divided into three different areas:
 \begin{enumerate}
   \item Robots working on Freescale's MCU.
   \item Robots controlled by mobile phones.
-  \item ``Face Followers''.
+  \item ``Followers''.
 \end{enumerate}
 
 \subsection{Robots working on Freescale's MCU}
@@ -103,7 +103,7 @@ Therefore, it's proven, that this MCU can be used for building (at least simple)
 robots.
 
 \subsection{Robots controlled by mobile phones}
-Next category are robots controlled by mobile phones, like ones shown on fig.
+Next category are robots controlled by mobile phones, like ones shown on photos
 \ref{img:SoA1}, \ref{img:SoA2} and \ref{img:SoA3}.
 It seems, that all of them all remotely-controlled using another phone -
 clicking on button during phone call with receiver generates a sound, which is received and transformed into
@@ -114,8 +114,9 @@ Some examples of robots controlled by additional program on smartphones
 still exist, but most of them either are poorly documented, or are using
 smartphone only as a remote, not part of the robot. 
 
-The best example was line-following robot developed by co-students Krzysztof
-Taborski and Kamil Szyc, but it wasn't published anywhere.
+The best example was line-following (it was also a representant of both other
+categories) robot developed by co-students Krzysztof Taborski and Kamil Szyc,
+but it wasn't published anywhere.
 Part of their code was even used as one of methods to communicate between
 Android and MCU.
 
@@ -123,7 +124,34 @@ Android and MCU.
 \includeimage{SoA2}{Mobile Controlled Robot by Robotics Bible, \cite{SoA2}}
 \includeimage{SoA3}{Mobile Controlled Robot by Mayoogh Girish, \cite{SoA3}}
 
-\subsection{``Face Followers''}
-% TODO Face Followers
+\clearpage
 
+\subsection{``Followers''}
+Last category of robots are ``Followers'', designed to follow something.
+Most popular ones are rather simple line-followers, which are built for
+tournaments, where they have to finish the route, marked with a single line, in
+shortest time.
+Another example, much more complicated, could be following face (e.g. during
+video conference) - it can't be realized with simple color detection. 
+It requires a camera and more computational power, than MCUs can offer.
+One of such robots was the one designed for one of previous projects (fig.
+\ref{img:SoA0}). 
 \includeimage{SoA0}{FaceFollower by Michał Kowalski and Adam Ćwik}
+
+It was extremely big one, because it was using a laptop as controller
+and external camera on a tripod, and all of that needed to be placed on a robot.
+It was also using one on Freescale's microprocessors.
+
+Camera was capturing video, application developed for laptop was responsible for
+detecting faces on it, and then was sending message with command to MCU over
+USB cable, which was responsible for translating it into steering for wheels and
+so on.
+MCU also echoed back commands and was informing about current position and speed
+of wheels, read from encoders on them. All of that required sending several
+characters long strings in both directions.
+
+Main idea behind this thesis, is to check, if smartphones can be used to
+miniaturize such robot, by replacing laptop and external camera with much
+smaller, but not much worse, device.
+Therefore, only checking possibility and performance of face detection and
+communication with MCU needs to be done.
