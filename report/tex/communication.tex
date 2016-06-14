@@ -152,4 +152,24 @@ time to time, but more frequently than in ``sync'' version.]
 % TODO sync-cdc?
 
 \section{Summary}
-% TODO tables with performance and pros/cons comparison
+% TODO pros/cons comparison
+
+\begin{center}
+\begin{tabular}{l|r|r|r|r|r|r|r|r|r|r}
+& \multicolumn{3}{c|}{Xperia Neo - CDC} & \multicolumn{3}{c|}{Moto G - CDC} &
+\multicolumn{4}{c}{Moto G - UART} \\
+message length & 1 & 32 & \hspace{3ex}50 & 
+1 & 32 & \hspace{3ex}50 & \hspace{1ex}1 & 
+32 & 50 & 64
+\\
+\hline
+USB Host API & 
+11/22 & 12/22 & 12 & 11/22 & 12/22 & 12 &
+\multicolumn{4}{c}{\cellcolor{red!50}not working}
+\\
+felHR85 - async & 
+11 & 11 & 12 & 11 & 11 & 12 & 2 & 34 & \cellcolor{yellow!50}52 & 67 \\
+felHR85 - sync & 
+25 & 21 & 24 & 22 & 12 & 12 & 4 & 33 & \cellcolor{yellow!50}57 & 66
+\end{tabular}
+\end{center}
