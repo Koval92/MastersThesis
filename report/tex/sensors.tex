@@ -2,7 +2,8 @@
 
 \section{Introduction}
 Modern smartphones have many sensors, and most of them can extend robot's
-functionality. Sensors differ between phones, and new (or more advanced) ones can
+functionality.
+Sensors differ between phones, and new (or more advanced) ones can
 be connected using possible connections (mostly USB and Bluetooth).
 Most popular ones are:
 \begin{itemize}
@@ -60,11 +61,20 @@ Available implementations of face detection includes:
 {../code_samples/opencv_sample.java}
 
 \includeimage{opencv_high}{openCV - high resolution}
+[\\All faces were detected, but also false matches can be seen. Faces were
+always found, and false matches occurred only from time to time.]
+
 \includeimage{opencv_low}{openCV - low resolution}
+[\\Not all faces were detected, but there's also no false matches. Frame
+around face has the same width (3px) as on previous image, so resolution is
+really small.]
 
 \section{OpenCV NDK}
 % real time?
 \includeimage{opencv_ndk}{openCV - NDK}
+[\\Application has limited screen area, so only 3 rows fitted. False matches
+also occurred, and not all faces were discovered correctly, but detection was
+working in almost real-time, and quality is still high.]
 
 \section{Summary}
 % TODO pros and cos of each method
@@ -86,12 +96,14 @@ configuration needed for Camera API):
 176 & 144 \\
 \end{tabular}
 \end{center}
-As it can be seen, few resolutions are available for both smartphones, so they
-were the ones used during testing of Camera API. Face Detector API doesn't work
-on camera preview, file with the same faces was used, and scaled to have the same
-height as resolutions available to Camera API. On the other hand, in OpenCV only
-maximum width and height could be set, so it was set to the same as in Camera
-API, but actual resolution could be a little smaller.
+As it can be seen, some resolutions are available for both smartphones, so they
+were the ones used during testing of Camera API. 
+However, they couldn't be used for other methods.
+Face Detector API doesn't work on camera preview, file with the same faces was
+used, and scaled to have the same height as resolutions available to Camera API. 
+On the other hand, in OpenCV only maximum width and height could be set, so it
+was set to the same as in Camera API, but actual resolution could be a little
+smaller.
 
 Average time needed for calculating single frame are as follows:
 \begin{center}

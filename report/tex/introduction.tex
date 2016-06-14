@@ -1,10 +1,11 @@
 \chapter{Introduction}
 
 \section{Description of problem}
-Nowadays, popularity of robots is on the raise. It's not hard to built a simple
-one, and Internet is full of tutorials how to build them. They are built
-using specially programmed microcontrollers (MCUs), and simplest ones even
-without any.
+Nowadays, popularity of robots is on the raise. 
+It's not hard to built a simple one, and Internet is full of tutorials how to
+build them.
+They are built using specially programmed microcontrollers (MCUs), and simplest
+ones even without any.
 However, MCUs have some limitations:
 \begin{enumerate}
   \item They have limited memory and computational capability.
@@ -44,25 +45,27 @@ Found solutions should be analyzed with attention to:
   \item difficulty of implementation.
 \end{itemize}
 Two Android smartphones (with different performance and Android version) will be
-used: Sony Ericsson Xperia Neo and Motorola Moto G LTE. They will communicate
-with MCU through USB cable, and face detection using built-in camera will be
-used as an example of extending MCU's capabilities - it requires both computing
-power and sensors not available in MCU, and there exists several ways to
-implement this.
+used: Sony Ericsson Xperia Neo and Motorola Moto G LTE.
+Communication with MCU will be realized through USB cable.
+Face detection using built-in camera will be used as an example of extending
+MCU's capabilities - it requires both computing power and sensors not available
+in MCU, and there exists several ways to implement this.
 
-As MCU, a Freescale FRDM KL26Z will be used. \cite{mcu_on_eclipse} is a blog
-dedicated to development on Freescale platform (mostly KL25Z, predecessor of
-KL26Z), and even contains an article how to built a mobile robot on that
-platform (img. \ref{img:frd_zumo}). It has articles how to use most of
-those MCUs features, however from smartphone's point of view, only communication
-using USB port (KL25Z and KL26Z have two of them) is required.
+As MCU, a Freescale FRDM KL26Z will be used. 
+\cite{mcu_on_eclipse} is a blog dedicated to development on Freescale platform
+(mostly KL25Z, predecessor of KL26Z), and even contains an article how to built a mobile robot on that
+platform (img. \ref{img:frd_zumo}).
+It has articles how to use most of those MCUs features, however from
+smartphone's point of view, only communication using USB port (KL25Z and KL26Z
+have two of them) is required.
 
 Because of already working solutions on Freescale's MCUs (described in
 State-of-Art section), there is no need to build an actual, working robot - it's
-proven, that those MCUs can be used as a controlling unit of a robot. Therefore,
-this thesis focuses only on making use of smartphone for detecting position of
-face (as in robot on img. \ref{img:SoA0}, but with Android instead of PC) and
-sending text command to MCU (also as in \ref{img:SoA0}, but on Android, not PC).
+proven, that those MCUs can be used as a controlling unit of a robot.
+Therefore, this thesis focuses only on making use of smartphone for detecting
+position of face (as in robot on img. \ref{img:SoA0}, but with Android instead
+of PC) and sending text command to MCU (also as in \ref{img:SoA0}, but on
+Android, not PC).
 
 \section{Content of thesis}
 This thesis contains:
@@ -89,30 +92,32 @@ State of Art can be divided into three different areas:
 
 \subsection{Robots working on Freescale's MCU}
 Good example of such robot can be Freedom Zumo Robot, described in one of posts
-on \cite{mcu_on_eclipse} (img. \ref{img:frd_zumo}). It's built on FRDM KL25Z,
-and Zumo Robot Kit for Arduino - KL25Z (and KL26Z probably too) is compatible with
-it.
+on \cite{mcu_on_eclipse} (img. \ref{img:frd_zumo}).
+It's built on FRDM KL25Z, and Zumo Robot Kit for Arduino - KL25Z (and KL26Z
+probably too) is compatible with it.
 \includeimage{frd_zumo}{FRDM Zumo Robot, \cite{mcu_on_eclipse}}
 
 Another example could be a robot built for one of previous projects - it will be
-described later. Therefore, it's proven, that this MCU can be used for building
-(at least simple) robots.
+described later.
+Therefore, it's proven, that this MCU can be used for building (at least simple)
+robots.
 
 \subsection{Robots controlled by mobile phones}
 Next category are robots controlled by mobile phones, like ones shown on fig.
-\ref{img:SoA1}, \ref{img:SoA2} and \ref{img:SoA3}. It seems, that all of them
-all remotely-controlled using another phone - clicking on button during phone
-call with receiver generates a sound, which is received and transformed into
-signal in headphones' port. None of examples have any (additional) logic in
-phone. 
+\ref{img:SoA1}, \ref{img:SoA2} and \ref{img:SoA3}.
+It seems, that all of them all remotely-controlled using another phone -
+clicking on button during phone call with receiver generates a sound, which is received and transformed into
+signal in headphones' port.
+None of examples have any (additional) logic in phone. 
 
 Some examples of robots controlled by additional program on smartphones
 still exist, but most of them either are poorly documented, or are using
 smartphone only as a remote, not part of the robot. 
 
 The best example was line-following robot developed by co-students Krzysztof
-Taborski and Kamil Szyc, but it wasn't published anywhere. Part of their code
-was even used as one of methods to communicate between Android and MCU.
+Taborski and Kamil Szyc, but it wasn't published anywhere.
+Part of their code was even used as one of methods to communicate between
+Android and MCU.
 
 \includeimage{SoA1}{Mobile Controlled Robot by Ganeev Singh, \cite{SoA1}}
 \includeimage{SoA2}{Mobile Controlled Robot by Robotics Bible, \cite{SoA2}}
