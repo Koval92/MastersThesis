@@ -68,3 +68,42 @@ Available implementations of face detection includes:
 
 \section{Summary}
 % TODO pros and cos of each method
+
+Resolutions available for preview for both smartphones (obtained during
+configuration needed for Camera API):
+\begin{center}
+\begin{tabular}{r@{ x }l|r@{ x }l}
+\multicolumn{2}{c|}{Moto G} & \multicolumn{2}{c}{Xperia} \\
+\hline
+1280 & 960 & 1600 & 1200 \\
+1280 & 720 & 1280 & 720 \\
+960 & 720 & 864 & 480 \\
+864 & 480 & 640 & 480 \\
+768 & 432 & 480 & 320 \\
+720 & 480 & 352 & 288 \\
+640 & 480 & 320 & 240 \\
+320 & 240 & 176 & 144 \\
+176 & 144 & \multicolumn{2}{}{} \\
+\end{tabular}
+\end{center}
+As it can be seen, few resolutions are available for both smartphones, so they
+were the ones used during testing of Camera API. Face Detector API doesn't work
+on camera preview, file with the same faces was used, and scaled to have the same
+height as resolutions available to Camera API. On the other hand, in OpenCV only
+maximum width and height could be set, so it was set to the same as in Camera
+API, but actual resolution could be a little smaller.
+
+Average time needed for calculating single frame are as follows:
+\begin{center}
+\begin{tabular}{r@{ x }l|r|r|r|r|r|r}
+\multicolumn{2}{}{} & \multicolumn{3}{c|}{Xperia} & \multicolumn{3}{c}{Moto G} \\
+\multicolumn{2}{}{} & \hspace{4ex}FD & Camera & OpenCV & \hspace{4ex}FD & Camera
+& OpenCV
+\\
+\hline 1280 & 720 & 420 & 180 & - & 380 & 33 & 1500 \\
+864 & 480 & 390 & 110 & - & 320 & 33 & 1200 \\
+640 & 480 & 390 & 123 & 5000 & 320 & 33 & 1000 \\
+320 & 240 & - & 128 & 2500 & - & - & 275 \\
+176 & 144 & - & 101 & 500 & - & - & 105
+\end{tabular}
+\end{center}
