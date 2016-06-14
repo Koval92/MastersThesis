@@ -11,6 +11,7 @@ Because of similar names of projects, they will be referenced as Host API,
 mik3y and felHR85.
 
 % TODO all screenshots on xperia
+% TODO mention ``\0''
 
 \section{USB Host API}
 
@@ -40,10 +41,14 @@ Only first message is received completely, but sent from MCU as two.
 Next ones are missing last character, and have last non-missed character from
 previous one at the beginning.]
 
+\clearpage
+
 \section{USB Serial by mik3y}
 
 \lstinputlisting[float, label=lst:mik3y, caption=mik3y]
 {../code_samples/mik3y_sample.java}
+
+\clearpage
 
 \section{USB Serial by felHR85}
 
@@ -52,35 +57,61 @@ previous one at the beginning.]
 \lstinputlisting[float, label=lst:async, caption=felHR85 async]
 {../code_samples/felhr85async_sample.java}
 
-\includeimage{comm/async/async_cdc_1}{felHR85, async-cdc, 1 letter}
-[]
+\includeimage{comm/async/async_cdc_1}{felHR85, async-CDC, 1 letter}
+[\\Received text is correct, but in most cases, two messages were sent at once.
+Average execution time was 11 ms.]
 
-\includeimage{comm/async/async_cdc_32}{felHR85, async-cdc, 32 letters}
-[]
+\includeimage{comm/async/async_cdc_32}{felHR85, async-CDC, 32 letters}
+[\\Received text is correct. 
+In this case, all messages were sent separately.
+Average execution time was also 11 ms.]
 
-\includeimage{comm/async/async_cdc_50}{felHR85, async-cdc, 50 letters}
-[]
+% TODO test for 31 long?
 
-\includeimage{comm/async/async_cdc_64}{felHR85, async-cdc, 64 letters}
-[]
+\includeimage{comm/async/async_cdc_50}{felHR85, async-CDC, 50 letters}
+[\\Received text is correct, and all messages were sent separately.
+Each text is divided into two lines, because it doesn't fit the window, and
+Android does that automatically.
+Average execution time was 12 ms.]
 
-\includeimage{comm/async/async_cdc_70}{felHR85, async-cdc, 70 letters}
-[]
+\includeimage{comm/async/async_cdc_64}{felHR85, async-CDC, 64 letters}
+[\\Received text is  NOT correct.
+Result looks the same as for using USB Host API.]
 
-\includeimage{comm/async/async_uart_1}{felHR85, async-uart, 1 letter}
-[]
+\includeimage{comm/async/async_cdc_70}{felHR85, async-CDC, 70 letters}
+[\\Received text is also not correct.
+It can be also seen, that the same as for 64 chars long message, ending is
+missing, and next message starts with first of missing letters.]
 
-\includeimage{comm/async/async_uart_32}{felHR85, async-uart, 32 letters}
-[]
+\includeimage{comm/async/async_uart_1}{felHR85, async-UART, 1 letter}
+[\\Received text was correct, but send as only a few messages. 
+In async-CDC it was only 2 messages at once, in this case all is send in 2-3.
+Average execution time was about 1.5 ms, which is really faster than using CDC.]
 
-\includeimage{comm/async/async_uart_50}{felHR85, async-uart, 50 letters}
-[]
+\includeimage{comm/async/async_uart_32}{felHR85, async-UART, 32 letters}
+[\\Received text looks messy, but is also regular, so it still can be seen,
+that is correct. ``uart`` can be seen only once, so it means, that MCU can
+continuously get text from buffer, before escaping loop.
+Average execution time was about 34 ms, which is longer than using CDC, but
+seems to be correlated to length of message.]
 
-\includeimage{comm/async/async_uart_64}{felHR85, async-uart, 64 letters}
-[]
+\includeimage{comm/async/async_uart_50}{felHR85, async-UART, 50 letters}
+[\\Received text is correct, and looks neater than the one for 32 chars, but
+it's only because of displaying it. 
+As for 32 chars, ``uart: `` can be seen only from time to time (next one was
+off the screen).
+Average execution time was about 52 ms.]
 
-\includeimage{comm/async/async_uart_70}{felHR85, async-uart, 70 letters}
-[]
+\includeimage{comm/async/async_uart_64}{felHR85, async-UART, 64 letters}
+[\\It's the first time, that 64 long message was transmitted completely without
+any errors.
+Average execution time was about 67 ms.]
+
+\includeimage{comm/async/async_uart_70}{felHR85, async-UART, 70 letters}
+[\\Because 64 chars long message was transmitted without errors, it was worth
+checking, if even longer messages could be send. 
+And indeed, with UART it's possible to do it without errors.
+Average execution time was about 73 ms, so it actually increases with length.]
 
 \clearpage
 
@@ -89,40 +120,40 @@ previous one at the beginning.]
 \lstinputlisting[float, label=lst:sync, caption=felHR85 sync]
 {../code_samples/felhr85sync_sample.java}
 
-\includeimage{comm/sync/sync_cdc_1}{felHR85, sync-cdc, 1 letter}
+\includeimage{comm/sync/sync_cdc_1}{felHR85, sync-CDC, 1 letter}
 []
 
-\includeimage{comm/sync/sync_cdc_32}{felHR85, sync-cdc, 32 letters}
+\includeimage{comm/sync/sync_cdc_32}{felHR85, sync-CDC, 32 letters}
 []
 
-\includeimage{comm/sync/sync_cdc_50}{felHR85, sync-cdc, 50 letters}
+\includeimage{comm/sync/sync_cdc_50}{felHR85, sync-CDC, 50 letters}
 []
 
-\includeimage{comm/sync/sync_cdc_64}{felHR85, sync-cdc, 64 letters}
+\includeimage{comm/sync/sync_cdc_64}{felHR85, sync-CDC, 64 letters}
 []
 
-\includeimage{comm/sync/sync_uart_1}{felHR85, sync-uart, 1 letter}
+\includeimage{comm/sync/sync_uart_1}{felHR85, sync-UART, 1 letter}
 []
 
-\includeimage{comm/sync/sync_uart_32}{felHR85, sync-uart, 32 letters (1)}
+\includeimage{comm/sync/sync_uart_32}{felHR85, sync-UART, 32 letters (1)}
 []
 
-\includeimage{comm/sync/sync_uart_32_2}{felHR85, sync-uart, 32 letters (2)}
+\includeimage{comm/sync/sync_uart_32_2}{felHR85, sync-UART, 32 letters (2)}
 []
 
-\includeimage{comm/sync/sync_uart_50}{felHR85, sync-uart, 50 letters (1)}
+\includeimage{comm/sync/sync_uart_50}{felHR85, sync-UART, 50 letters (1)}
 []
 
-\includeimage{comm/sync/sync_uart_50_2}{felHR85, sync-uart, 50 letters (2)}
+\includeimage{comm/sync/sync_uart_50_2}{felHR85, sync-UART, 50 letters (2)}
 []
 
-\includeimage{comm/sync/sync_uart_64}{felHR85, sync-uart, 64 letters}
+\includeimage{comm/sync/sync_uart_64}{felHR85, sync-UART, 64 letters}
 []
 
-\includeimage{comm/sync/sync_uart_70}{felHR85, sync-uart, 70 letters (1)}
+\includeimage{comm/sync/sync_uart_70}{felHR85, sync-UART, 70 letters (1)}
 []
 
-\includeimage{comm/sync/sync_uart_70_2}{felHR85, sync-uart, 70 letters (2)}
+\includeimage{comm/sync/sync_uart_70_2}{felHR85, sync-UART, 70 letters (2)}
 []
 
 \clearpage
@@ -130,53 +161,54 @@ previous one at the beginning.]
 \subsection{Division of messages}
 % TODO division of messages
 
-\includeimage{comm/div/div_async_cdc}{Division of message: async-cdc}
+\includeimage{comm/div/div_async_cdc}{Division of message: async-CDC}
 [\\Text is received in one message. 
 Semicolon is visible on line with next message, because MCU sends new line
 character (``\textbackslash n''), and semicolor is added on Android side after that.]
 
-\includeimage{comm/div/div_async_cdc2}{Division of message: async-cdc with too
+\includeimage{comm/div/div_async_cdc2}{Division of message: async-CDC with too
 long message}
 [\\It can be seen, what happens when message exceeds buffer.
 Each message is received as two:
 64 chars long, and 5 chars long (``5432'' + `` \textbackslash n'').]
 
-\includeimage{comm/div/div_async_uart}{Division of message: async-uart}
+\includeimage{comm/div/div_async_uart}{Division of message: async-UART}
 [\\Message is usually send letter by letter, with few exceptions.
-Interesting is fact, that ``uart: '' string is received only at the
-beginning (and sometimes later, not visible on screen), which means, that it's
-in reading loop the whole time - empty input stream should cause sending ``
-\textbackslash n'' and ``uart: ``.]
+As it was noted earlier, ``uart'' occurs only from time to time, which means,
+that MCU has something in buffer all the time.]
 
-\includeimage{comm/div/div_sync_uart}{Division of message: sync-uart}
+\includeimage{comm/div/div_sync_uart}{Division of message: sync-UART}
 [\\MCU still reads and sends message char-by-char, but smartphone reads them in
 blocks. 
 It can also be seen, that all blocks are correct, and errors can be
 seen only between them. 
-Also in this case, ``uart: `` can be seen only from time to time, but more
+Also in this case, ``uart`` can be seen only from time to time, but more
 frequently than in ``sync'' version.]
 
 % TODO sync-cdc?
+
+\clearpage
 
 \section{Summary}
 % TODO pros/cons comparison
 
 \begin{center}
-\begin{tabular}{r|r|r|r|r|r|r|r|r|r|r}
+\begin{tabular}{r|r|r|r|r|r|r|r|r|r|r|r}
 & \multicolumn{3}{c|}{Xperia Neo - CDC} & \multicolumn{3}{c|}{Moto G - CDC} &
-\multicolumn{4}{c}{Moto G - UART} \\
+\multicolumn{5}{c}{Moto G - UART} \\
 message length & 1 & 32 & \hspace{3ex}50 & 
 1 & 32 & \hspace{3ex}50 & \hspace{1ex}1 & 
-32 & 50 & 64
+32 & 50 & 64 & 70
 \\
 \hline
 USB Host API & 
 11/22 & 12/22 & 12 & 11/22 & 12/22 & 12 &
-\multicolumn{4}{c}{\cellcolor{red!50}not working}
+\multicolumn{5}{c}{\cellcolor{red!50}not working}
 \\
 felHR85 - async & 
-11 & 11 & 12 & 11 & 11 & 12 & 2 & 34 & \cellcolor{yellow!50}52 & 67 \\
+11 & 11 & 12 & 11 & 11 & 12 & 2 & 34 & 52 & 67 & 73 \\
 felHR85 - sync & 
-25 & 21 & 24 & 22 & 12 & 12 & 4 & 33 & \cellcolor{yellow!50}57 & 66
+25 & 21 & 24 & 22 & 12 & 12 &
+4 & 33 & \cellcolor{yellow!50}57 & 66 & \cellcolor{yellow!50}80
 \end{tabular}
 \end{center}
