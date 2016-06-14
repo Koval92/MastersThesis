@@ -33,7 +33,8 @@ opposition to sending 1 or 32 letters, other values were not observed.]
 
 \includeimage{comm/bulk/bulk_64}{USB Host API - sending 64 letters}
 [\\Received text is NOT correct. Only first message is received completely, but
-sent from MCU as two. Next ones are missing last character.]
+sent from MCU as two. Next ones are missing last character, and have last
+non-missed character from previous one at the beginning.]
 
 \section{USB Serial by mik3y}
 
@@ -123,18 +124,30 @@ sent from MCU as two. Next ones are missing last character.]
 \clearpage
 
 \subsection{Division of messages}
+% TODO division of messages
 
-\includeimage{comm/div/div_async_cdc}{Division of message: async-cdc (1)}
-[]
+\includeimage{comm/div/div_async_cdc}{Division of message: async-cdc}
+[\\Text is received in one message. Semicolon is visible on line with next
+message, because MCU sends new line character (``\textbackslash n''), and
+semicolor is added on Android side after that.]
 
-\includeimage{comm/div/div_async_cdc2}{Division of message: async-cdc (2)}
-[]
+\includeimage{comm/div/div_async_cdc2}{Division of message: async-cdc with too
+long message}
+[\\Result is interesting, because each message is received as two: 64
+chars long, and 5 chars long (``5432'' + `` \textbackslash n'').]
 
 \includeimage{comm/div/div_async_uart}{Division of message: async-uart}
-[]
+[\\As it can be seen, message is usually send letter by letter, with few
+exceptions. Interesting is fact, that ``uart: '' string is received only at the
+beginning (and sometimes later, not visible on screen), which means, that it's
+in reading loop the whole time - empty input stream should cause sending ``
+\textbackslash n'' and ``uart: ``.]
 
 \includeimage{comm/div/div_sync_uart}{Division of message: sync-uart}
-[]
+[\\MCU still reads and sends message char-by-char, but smartphone reads them in
+blocks. It can also be seen, that all blocks are correct, and errors can be
+seen only between them. Also in this case, ``uart: `` can be seen only from
+time to time, but more frequently than in ``sync'' version.]
 
 % TODO sync-cdc?
 
