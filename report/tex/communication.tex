@@ -121,40 +121,51 @@ Average execution time was about 73 ms, so it actually increases with length.]
 {../code_samples/felhr85sync_sample.java}
 
 \includeimage{comm/sync/sync_cdc_1}{felHR85, sync-CDC, 1 letter}
-[]
+[\\Received text is correct.
+Average execution time was about 22 ms, and in opposition to USB Host API, much
+shorter time was not observed.]
 
 \includeimage{comm/sync/sync_cdc_32}{felHR85, sync-CDC, 32 letters}
-[]
+[\\Same as earlier, result is correct.
+What is different to sending 1 char or to USB Host API, average execution time
+was always 12 ms.]
 
 \includeimage{comm/sync/sync_cdc_50}{felHR85, sync-CDC, 50 letters}
-[]
+[\\In this case, results were exactly the same as for USB Host API: text was
+correct and average execution time was about 12 ms.]
 
 \includeimage{comm/sync/sync_cdc_64}{felHR85, sync-CDC, 64 letters}
-[]
+[\\Also in case of exceeded buffer, result is the same as with USB Host API:
+chars exceeding buffer are missing, and one char from previous message appears
+in next one.]
 
 \includeimage{comm/sync/sync_uart_1}{felHR85, sync-UART, 1 letter}
-[]
+[\\Result looks similar to one for async-CDC (so it differs on both sides) but
+here more than two messages were sent at once. 
+Observed average time is about 9 ms.]
 
-\includeimage{comm/sync/sync_uart_32}{felHR85, sync-UART, 32 letters (1)}
-[]
+\includeimage{comm/sync/sync_uart_32}{felHR85, sync-UART, 32 letters}
+[\\Observed result is most similar to one for async-UART.
+Result is correct, and also average time of execution was about 33 ms.]
 
-\includeimage{comm/sync/sync_uart_32_2}{felHR85, sync-UART, 32 letters (2)}
-[]
-
-\includeimage{comm/sync/sync_uart_50}{felHR85, sync-UART, 50 letters (1)}
-[]
-
-\includeimage{comm/sync/sync_uart_50_2}{felHR85, sync-UART, 50 letters (2)}
-[]
+\includeimage{comm/sync/sync_uart_50}{felHR85, sync-UART, 50 letters}
+[\\This example is interesting, because text is shorter than buffer, and
+result is wrong. Worth noticing is fact, that ``uart'' text can be observed
+really often, and also that correct message appeared few times.
+Average execution time was still related to length of message: about 57 ms.]
 
 \includeimage{comm/sync/sync_uart_64}{felHR85, sync-UART, 64 letters}
-[]
+[\\Errors for 50 chars suggest, that longer messages should also have them,
+but\ldots\;result is correct!
+Average execution time wasn't surprising: about 67 ms.]
 
-\includeimage{comm/sync/sync_uart_70}{felHR85, sync-UART, 70 letters (1)}
-[]
-
-\includeimage{comm/sync/sync_uart_70_2}{felHR85, sync-UART, 70 letters (2)}
-[]
+\includeimage{comm/sync/sync_uart_70_2}{felHR85, sync-UART, 70 letters}
+[\\This result is also surprising: errors started appearing again, but most of
+messages are correct.
+Actually, only 2 of errors are visible on first glance (it even looks better
+than badly formatted, but correct previous ones), but there's more of them.
+However, result is still better than for 50 chars, but of course it takes
+longer to send it: about 80 ms.]
 
 \clearpage
 
@@ -175,7 +186,7 @@ Each message is received as two:
 \includeimage{comm/div/div_async_uart}{Division of message: async-UART}
 [\\Message is usually send letter by letter, with few exceptions.
 As it was noted earlier, ``uart'' occurs only from time to time, which means,
-that MCU has something in buffer all the time.]
+that MCU has something to read in buffer all the time.]
 
 \includeimage{comm/div/div_sync_uart}{Division of message: sync-UART}
 [\\MCU still reads and sends message char-by-char, but smartphone reads them in
@@ -183,7 +194,7 @@ blocks.
 It can also be seen, that all blocks are correct, and errors can be
 seen only between them. 
 Also in this case, ``uart`` can be seen only from time to time, but more
-frequently than in ``sync'' version.]
+frequently than in ``async'' version.]
 
 % TODO sync-cdc?
 
@@ -209,6 +220,6 @@ felHR85 - async &
 11 & 11 & 12 & 11 & 11 & 12 & 2 & 34 & 52 & 67 & 73 \\
 felHR85 - sync & 
 25 & 21 & 24 & 22 & 12 & 12 &
-4 & 33 & \cellcolor{yellow!50}57 & 66 & \cellcolor{yellow!50}80
+9 & 33 & \cellcolor{yellow!50}57 & 66 & \cellcolor{yellow!50}80
 \end{tabular}
 \end{center}
