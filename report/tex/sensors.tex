@@ -21,41 +21,95 @@ Most popular ones are:
   \item light sensor,
   \item proximity sensor.
 \end{itemize}
-Some (mostly high-end, or specialized ones) have also sensors like electronic
-compass, humidity/temperature sensors, fingerprint scanner, or even thermal
-camera.
+Some (mostly high-end, or specialized ones) smartphones have also sensors like
+electronic compass, humidity/temperature sensors, fingerprint scanner, or even
+thermal camera.
 
-% TODO write about face detecting
-Available implementations of face detection includes:
+One of possible application can be using one of cameras for face detection, and
+then turning robot around to make it directly at front. 
+Such functionality was implemented for ``Face Follower'' (img. \ref{img:SoA0})
+developed for one of previous projects. 
+It was using ``full'' version of OpenCV in C++. 
+Because Android is a different platform, the same method couldn't be used for
+it.
+Fortunately, Android offers few different ways to do it, including:
 \begin{itemize}
   \item FaceDetector API,
   \item Camera API,
-  \item OpenCV for Android,
-  \item OpenCV NDK.
+  \item OpenCV for Android (Java and NDK),
 \end{itemize}
+All methods are described in their own sections, and results are aggregated in
+table in summary sections. 
+During development, search results for ``face'' on Google were used, and final
+results were obtained on image from \cite{faces}, shown on img. \ref{img:faces}.
 
-% TODO short description
+\includeimage[0.7]{faces}{Image used for testing face detection}
 
 \section{FaceDetector API}
-% hard to obtain bitmap from camera
-
-% TODO screenshot + code sample
+First method is FaceDetector API, which is part of Android environment.
+Usage is simple (listing \ref{lst:fdapi}) but the problem is, that it requires
+image as a Bitmap, which is hard to get from a camera.
 \lstinputlisting[float, label=lst:fdapi, caption=Face Detector API]
 {../code_samples/facedetectorapi_sample.java}
+Obtaining frame as a Bitmap actually takes more time than detecting faces on it,
+so it was tested on image already in memory.
+Result is shown on img. \ref{img:facedetectorapi} - it can be seen, that it's
+possible to detect many faces (on this image: all 20).
+Unfortunately, Android Reference \cite{android_reference} doesn't describe, how
+face detection is done.
+
+Summing up, this API is rather for working on photos, not video, also
+because it has rather weak performance.
 
 \includeimage[0.4]{facedetectorapi}{Face Detector API}
 
 \section{Camera API}
-% max 5 faces
-% 30 ms in good light/on screen, 60 ms in bad
-% resolution doesn't have impact on speed, only on quality
-% detection in background
-
+Next method is CameraAPI, which is also part of Android, and fortunately allows
+for easy working with camera preview (but still, it's not described, how
+detection actually works).
+Actually, it's an API to access camera, and face detecting is only part of it.
+This API is now also deprecated and replaced with Camera2 API, but because newer
+one doesn't work with older Android versions (like version on Xperia Neo), older
+one was used. 
+Configuration of preview is a little complicated, but after that,
+face detection requires only starting it, and defining a method, which should be
+invoked on each detection. Example is shown in listing \ref{lst:cameraapi}.
 \lstinputlisting[float, label=lst:cameraapi, caption=Camera API]
 {../code_samples/cameraapi_sample.java}
 
+Big plus is a fact, that detection automatically happens in background, so it
+doesn't freeze application, and that it also runs fast.
+On the other hand, it is hard to visualize effects, so during tests it only
+logged result (position, number of detected faces) to console.
+In opposition to FaceDetector API, Camera API is able to found only up to 5
+faces.
+
 \section{OpenCV for Android}
 % detection in user's code
+Original robot was using OpenCV library on Windows, and it's also available for
+Android, written in Java (actually, only interface is in Java, and there is
+C++ below it).
+Similarly to Windows, it's also hard to make it work, but when it's done, it offers a lot of capabilities.
+
+It's possible to override method invoked on each frame (listing
+\ref{lst:opencv}), and then do e.g. face detection on it.
+Such approach was not possible in Camera API - it was possible to invoke method
+on each frame, but its face detection couldn't be used in such case.
+OpenCV offers more control, and allows for doing more things with images,
+because it's a whole library created for that matter.
+It has methods to look for patterns on image using, e.g. Haar cascades.
+It's possible to create own ones, but library also provides several pre-defined
+ones - few different for faces, for eyes, even for face of a cat.
+In sample code, detection freezes application, but because it's possible to
+control, when and how it's invoked, it's possible to do it in separate thread
+(which was actually done) or even work on few frames simultaneously.
+
+It's also easy to visualize effects on preview for camera. Results for high and
+low resolution can be found on img. \ref{img:opencv_high} and
+\ref{img:opencv_low}.
+As it can be seen, even for really small resolution, quality of detection is
+still quite good, and it was almost 15 times faster (~1500 ms vs 105 ms).
+There is also no (or very high) limit for maximum number of detected faces.
 
 \lstinputlisting[float, label=lst:opencv, caption=OpenCV]
 {../code_samples/opencv_sample.java}
@@ -70,7 +124,21 @@ around face has the same width (3px) as on previous image, so resolution is
 really small.]
 
 \section{OpenCV NDK}
-% real time?
+OpenCV on Android has also NDK (Native Development Kit) version.
+Using NDK instead of normal Android's SDK offers better performance, but working
+with it is much more complicated.
+
+Unfortunately, Android Studio still have problems with development of NDK, and
+most tutorials to it focuses on older Eclipse ADT. 
+OpenCV provides some example projects using NDK (and face detector is one of
+them), but they are created also for Eclipse ADT.
+
+Therefore, it wasn't implemented and tested. 
+Fortunately, there is already built example of Face Detector on Google Play, so
+it was possible to see, how it works (img. \ref{img:opencv_ndk}). 
+It was impossible to measure time needed for
+detection, but it seemed to be (almost) smooth, so probably about 50 ms for
+frame with quite high resolution (also unknown).
 \includeimage{opencv_ndk}{openCV - NDK}
 [\\Application has limited screen area, so only 3 rows fitted. False matches
 also occurred, and not all faces were discovered correctly, but detection was
@@ -99,13 +167,15 @@ configuration needed for Camera API):
 As it can be seen, some resolutions are available for both smartphones, so they
 were the ones used during testing of Camera API. 
 However, they couldn't be used for other methods.
-Face Detector API doesn't work on camera preview, file with the same faces was
-used, and scaled to have the same height as resolutions available to Camera API. 
+Face Detector API doesn't work on camera preview, so file with the same faces
+was used, and scaled to have the same height as resolutions available to Camera API. 
 On the other hand, in OpenCV only maximum width and height could be set, so it
 was set to the same as in Camera API, but actual resolution could be a little
 smaller.
+Methods working on camera preview were tested with image displayed on a FullHD
+computer display.
 
-Average time needed for calculating single frame are as follows:
+Average time needed for calculating single frame looks as follows:
 \begin{center}
 \begin{tabular}{r@{ x }l|r|r|r|r|r|r}
 \multicolumn{2}{c|}{} & \multicolumn{3}{c|}{Xperia Neo} &
@@ -121,3 +191,11 @@ Camera & OpenCV
 176 & 144 & - & 101 & 500 & - & - & 105
 \end{tabular}
 \end{center}
+
+Summary of each method:
+\begin{itemize}
+  \item FaceDetector API:
+  \item Camera API:
+  \item OpenCV (Java):
+  \item OpenCV (NDK):
+\end{itemize}
