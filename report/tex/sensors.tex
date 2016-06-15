@@ -78,7 +78,7 @@ invoked on each detection. Example is shown in listing \ref{lst:cameraapi}.
 {../code_samples/cameraapi_sample.java}
 
 Big plus is a fact, that detection automatically happens in background, so it
-doesn't freeze application, and that it also runs fast.
+doesn't freeze application, and that it runs fast (real-time on Moto G).
 On the other hand, it is hard to visualize effects, so during tests it only
 logged result (position, number of detected faces) to console.
 In opposition to FaceDetector API, Camera API is able to found only up to 5
@@ -108,7 +108,8 @@ It's also easy to visualize effects on preview for camera. Results for high and
 low resolution can be found on img. \ref{img:opencv_high} and
 \ref{img:opencv_low}.
 As it can be seen, even for really small resolution, quality of detection is
-still quite good, and it was almost 15 times faster (~1500 ms vs 105 ms).
+still quite good, and it was almost 15 times faster (\textasciitilde1500 ms vs
+105 ms).
 There is also no (or very high) limit for maximum number of detected faces.
 
 \lstinputlisting[float, label=lst:opencv, caption=OpenCV]
@@ -145,10 +146,12 @@ also occurred, and not all faces were discovered correctly, but detection was
 working in almost real-time, and quality is still high.]
 
 \section{Summary}
-% TODO pros and cos of each method
-
-Resolutions available for preview for both smartphones (obtained during
-configuration needed for Camera API):
+To compare performance of each method, they should be tested in the same
+conditions. 
+Therefore, the same image (\ref{img:faces}) was used for all of them.
+Then, they were tested for different resolutions.
+During configuration of Camera API example, list of available preview size for
+both smartphones was obtained:
 \begin{center}
 \begin{tabular}{r@{ x }l|r@{ x }l}
 \multicolumn{2}{c|}{Moto G} & \multicolumn{2}{c}{Xperia Neo} \\
@@ -175,7 +178,8 @@ smaller.
 Methods working on camera preview were tested with image displayed on a FullHD
 computer display.
 
-Average time needed for calculating single frame looks as follows:
+Average time needed for calculating single frame looks as follows (all values
+are in milliseconds):
 \begin{center}
 \begin{tabular}{r@{ x }l|r|r|r|r|r|r}
 \multicolumn{2}{c|}{} & \multicolumn{3}{c|}{Xperia Neo} &
@@ -191,11 +195,59 @@ Camera & OpenCV
 176 & 144 & - & 101 & 500 & - & - & 105
 \end{tabular}
 \end{center}
+As it can be seen, Camera API was the fastest. 
+FaceDetector API was also fast, because its time was measured only for face
+detection, and obtaining it required much more time.
+OpenCV was slow, but in lower resolutions offered best quality.
+It can also be seen, that Moto G is executing exactly the same code about 5
+times faster.
 
-Summary of each method:
+Each method has its advantages and disadvantages, and different method can be
+used, depending on requirements:
 \begin{itemize}
   \item FaceDetector API:
+  	\begin{itemize}
+  	  \item[$+$] easy to use,
+  	  \item[$+$] can work on image other than camera preview,
+  	  \item[$+$] no face limit,
+  	  \item[$+$] no external libraries,
+  	  \item[$-$] poor performance,
+  	  \item[$-$] hard to make it work with camera,
+  	\end{itemize}
   \item Camera API:
+	\begin{itemize}
+  	  \item[$+$] easy to use,
+  	  \item[$+$] doesn't freeze application,
+  	  \item[$+$] no external libraries,
+  	  \item[$+$] really fast,
+  	  \item[$-$] max 5 faces
+  	  \item[$+$] hard to visualize result on preview,
+  	\end{itemize}
   \item OpenCV (Java):
+	\begin{itemize}
+  	  \item[$+$] allows for much more than face detection,
+  	  \item[$+$] acceptable performance, especially for lower resolution,
+  	  \item[$+$] no face limit,
+  	  \item[$+$] easy to visualize results,
+  	  \item[$+$] more control in developer's code,
+  	  \item[$-$] more control in developer's code,
+  	  \item[$-$] external library, hard to make it work,
+  	  \item[$-$] slower than Camera API,
+  	\end{itemize}
   \item OpenCV (NDK):
+	\begin{itemize}
+  	  \item[$+$] same as in Java, but with better performance and more control,
+  	  \item[$-$] same as in Java, but much harder to work with it,
+  	  \item[$-$] no Android Studio support,
+  	\end{itemize}
 \end{itemize}
+
+Summing up, the best method of doing face detection is using Camera API, because
+it's fastest and simplest.
+FaceDetector API is inappropriate, because it's slow, and useful only for
+working with already captured picture, when Camera API can't be used.
+
+OpenCV is also a good library for face detection, but much more complex
+(especially NDK), which is both huge advantage and disadvantage.
+It starts being really useful, when there is a need to make something different
+with an image, than face detection, because the rest offers only that.
