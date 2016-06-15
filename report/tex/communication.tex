@@ -1,7 +1,13 @@
 \chapter{Communication}
 
 \section{Introduction}
-Three ways to communicate over USB were found:
+The most important thing in extending robot's capabilities with a smartphone, is
+to connect smartphone with MCU.
+Because chosen MCU supports USB CDC and UART through it's OpenSDA USB port, one
+of possible ways is to do it with USB cable connected to smartphone's micro USB port.
+Next thing is to find a way, which will allow for access to a port, and to send
+a text message through it.
+After research, three ways were found:
 \begin{itemize}
   \item USB Host API \cite{android_reference},
   \item usb-serial-for-android library by mik3y \cite{mik3y},
@@ -10,13 +16,70 @@ Three ways to communicate over USB were found:
 Because of similar names of projects, they will be referenced as Host API,
 mik3y and felHR85.
 
-% TODO all screenshots on xperia
-% TODO mention ``\0''
+Each method will be implemented, and tested on both smartphones with both
+solutions on MCU's side.
+Few test messages with different size will be send, and received echo will be
+analyzed.
+Selected sizes and messages are:
+\begin{enumerate}
+  \item 1 character:\\
+  	any single letter,
+  \item 32 characters:\\
+  	``String with 32 charsBA987654321!'',
+  \item 50 characters:\\
+  	``String with 50 chars..RQPONMLKJIHGFEDCBA987654321!'',
+  \item 64 characters:\\
+  	``String with 64 chars................RQPONMLKJIHGFEDCBA987654321!'',
+  \item 70 characters (optionally, if previous works):\\
+  	``String with 70 chars......................RQPONMLKJIHGFEDCBA987654321!''
+\end{enumerate}
+Because buffer in MCU is 64 elements long, it should allow for good analysis of
+correctness of result and performance.
+MCU uses C-strings, where last element of string is ``\textbackslash 0'', so it
+can actually fit only 63 characters, therefore 64 letters long string should be
+too long for it.
+Also, echo is in format ``\emph{protocol}: \emph{text}\textbackslash n'', where
+\emph{protocol} is ``uart'' or ``cdc'', and \emph{text} is content of protocol's
+buffer in MCU.
+All methods are transmitting bytes, and not letters, but it's easy to transform
+it in both directions.
+
+Tests for each combination were performed, and are documented (with conclusions
+in captions) on screenshots (img.
+\ref{img:comm/bulk/bulk_1}-\ref{img:comm/sync/sync_uart_70_2}) in section
+dedicated to each method.
+However, screenshots were made only if such combination was working, and only
+for Moto G (results for Xperia Neo were generally the same, if not stated
+otherwise).
+
+Before testing own implementation, tests with terminals available on Google Play
+were performed, and showed, that Xperia Neo works only with CDC, and not UART,
+while Moto G works with both.
+It should be tested, if this is true also for own applications.
 
 \section{USB Host API}
+First method is USB Host API, which is built-in Android. 
+It's a low-level method, and because of that, it's hard to configure.
+At first, it required finding endpoints which can be used for writing and
+reading, which is realized by many nested-loops.
+Then, usage of controlTransfer(\ldots) method is required, to configure.
+It's not documented, what actually should be passed to it.
+Fortunately, example working with another Freescale microcontroller was found,
+and was also working with FRDM KL26Z, so it was possible to test it, however it
+was working only with CDC, and not UART.
 
+Sample code for sending and receiving message is shown on listing
+\ref{lst:usbhostapi}.
 \lstinputlisting[float, label=lst:usbhostapi, caption=USB Host API]
 {../code_samples/bulktransfer_sample.java}
+It's synchronous method, so programmer has to care for regular calling of
+reading function.
+In case of echo, it can be done only after sending something, but it can't be
+used, if MCU sends something unexpected, like message about error, or current
+state of a robot.
+Which is even worse, with this type of communication, write causes freeze of
+sender, until other device reads it.
+On the other hand, it means, that message can't be missed.
 
 \includeimage{comm/bulk/bulk_1}{USB Host API - sending 1 letter}
 [\\Received text is correct. 
@@ -44,15 +107,49 @@ previous one at the beginning.]
 \clearpage
 
 \section{USB Serial by mik3y}
-
+Next method is USB Serial library available on Github of user named mik3y.
+It's seems to be quite popular - it's often mentioned on StackOverflow, and on
+project's page, there is a list of many project using it.
+Example usage of library is shown on listing \ref{lst:mik3y}.
 \lstinputlisting[float, label=lst:mik3y, caption=mik3y]
 {../code_samples/mik3y_sample.java}
+Analyzing implementation of methods shows, that it makes usage of USB Host API,
+but in more user-friendly, high-level form.
+
+Unfortunately, it seems to be not compatible with chosen MCU, on any phone, and
+neither on CDC, nor UART protocol.
+Actually, during many tries, it was possible to send something using it, but
+received text was not the one, which was send. 
+Even more interesting is fact, that MCU received some data, when reading method
+was called.
+
+Therefore, this library couldn't be tested further, and also any sensible
+screenshot wasn't made.
+Nonetheless, it should work fine with other microcontrollers, and be easier to
+use than USB Host API.
 
 \clearpage
 
 \section{USB Serial by felHR85}
+Last found library is USB Serial, also available on Github, on account called
+felHR85.
+It also has some popularity, but smaller that USB Serial by mik3y.
+Library allows for asynchronous transmission, with optional synchronous mode.
+Another advantage is fact, that library's page mentions using \url{jipack.io}
+for easier adding it to project, and also example project works with KL26Z
+out-of-the-box.
 
 \subsection{Asynchronous mode}
+Asynchronous mode (listing \ref{lst:async}) offers one big advantage: it reads
+using callbacks.
+Programmer doesn't have to worry about continuous reading, because it's done
+automatically, and only have to implement function, which operates on received
+bytes.
+Also, implementation of writing and reading is not using USB Host API, or at
+least it much ``deeper''.
+
+First tests showed, that it works both with CDC and UART, although as it was
+expected, the latter was working only on Moto G.
 
 \lstinputlisting[float, label=lst:async, caption=felHR85 async]
 {../code_samples/felhr85async_sample.java}
@@ -116,9 +213,15 @@ Average execution time was about 73 ms, so it actually increases with length.]
 \clearpage
 
 \subsection{Synchronous mode}
-
+USB Serial by felHR85 supports also synchronous way, where programmer has to
+care for reading.
+In this approach, writing and reading is actually only wrapping USB Host API,
+but looks much more nicely (listing \ref{lst:sync}).
 \lstinputlisting[float, label=lst:sync, caption=felHR85 sync]
 {../code_samples/felhr85sync_sample.java}
+
+What is interesting, is that it worked not only with CDC, but also with UART
+(although only on Moto G).
 
 \includeimage{comm/sync/sync_cdc_1}{felHR85, sync-CDC, 1 letter}
 [\\Received text is correct.
@@ -170,7 +273,18 @@ longer to send it: about 80 ms.]
 \clearpage
 
 \subsection{Division of messages}
-% TODO division of messages
+As it was seen, MCU not always receives one message at once:
+in async-CDC example, few messages were sent together, and in (a)sync-CDC
+exceeding buffer, message was broken into two parts.
+
+It's also worth testing, how smartphone receives messages from MCU.
+It was visualized by putting a semicolon on end of each received block.
+
+Results with conclusions can be seen on images
+\ref{img:comm/div/div_async_cdc}-\ref{img:comm/div/div_sync_uart}.
+As it can be seen, CDC transmits data in blocks (with size not bigger than
+buffer), and UART does this letter by letter (and buffer is used for queuing
+them).
 
 \includeimage{comm/div/div_async_cdc}{Division of message: async-CDC}
 [\\Text is received in one message. 
@@ -201,8 +315,10 @@ frequently than in ``async'' version.]
 \clearpage
 
 \section{Summary}
-% TODO pros/cons comparison
+Tests have shown, that it's possible to communicate between chosen smartphones
+and MCU using two libraries: USB Host API and USB Serial by felHR85.
 
+Consolidated performance results are shown in table below:
 \begin{center}
 \begin{tabular}{r|r|r|r|r|r|r|r|r|r|r|r}
 & \multicolumn{3}{c|}{Xperia Neo - CDC} & \multicolumn{3}{c|}{Moto G - CDC} &
@@ -223,3 +339,90 @@ felHR85 - sync &
 9 & 33 & \cellcolor{yellow!50}57 & 66 & \cellcolor{yellow!50}80
 \end{tabular}
 \end{center}
+
+As it can be seen CDC offers the same performance for all libraries,
+smartphones, and message length, because it transmits whole buffer at once.
+Interesting is fact, that sometimes shorter message needed more time than
+longer.
+It limits message length to size of a buffer, but message is always correct.
+Therefore, if there's a need to send something longer, it should be divided into
+shorter messages, and then merged on the other device.
+
+In case of using UART, longer messages can be sent, because they are send
+byte-by-byte anyway, and buffer is using for queueing them.
+Because of that, in UART there's a need to get received message from smaller
+blocks, so using some marker of message end could be a good solution.
+Another good solution could be sending some checksums, because errors were
+observed during tests (but only for using sync mode with it).
+
+Big disadvantage of UART is also lack of compatibility with older smartphones,
+which is a problem especially because CDC on MCU is a much more complicated
+solution, and not every MCU supports it, or even have USB port.
+Advantage is fact, that UART is much more popular, and USB is only one of form,
+it appears on microcontrollers.
+However, doing it though USB openSDA port blocks possibility to use debugger on
+the same port.
+
+Each found library has some advantages and disadvantages, which can be presented
+as a list:
+\begin{itemize}
+  \item USB Host API:
+  	\begin{itemize}
+  	  \item[$+$] works with good results,
+  	  \item[$+$] no external libraries,
+  	  \item[$+$] low-level, many options for configuration,
+  	  \item[$-$] low-level, hard configuration,
+  	  \item[$-$] doesn't work with UART,
+  	  \item[$-$] only synchronous approach
+  	\end{itemize}
+  \item USB Serial by mik3y:
+	\begin{itemize}
+  	  \item[$+$] popularity,
+  	  \item[$+$] should work with UART,
+  	  \item[$+$] high-level,
+  	  \item[$-$] only synchronous approach,
+  	  \item[$-$] external library,
+  	  \item[$-$] not compatible with tested MCU,
+  	\end{itemize}
+  \item USB Serial by felHR85:
+	\begin{itemize}
+	  \item[$+$] the same code works both CDC and UART,
+	  \item[$+$] easy to use,
+	  \item[$+$] reading using callbacks in async mode,
+  	  \item[$-$] external library (but can be easily added using
+  	  	\url{jitpack.io}),
+  	  \item[$-$] was harder to find than USB Serial by mik3y
+  	  \item[$-$] UART doesn't work on Xperia Neo (but problem is probably on
+  	  	phone's side).
+  	\end{itemize}
+\end{itemize}
+Advantages and disadvantages of both protocols:
+\begin{itemize}
+  \item CDC:
+  	\begin{itemize}
+  	  \item[$+$] compatibility with both smartphones, 
+  	  \item[$+$] in KL26Z, openSDA port is still available for debugging, 
+  	  \item[$+$] whole message sent at once, 
+  	  \item[$+$] waits, until seconds device reads message,  
+  	  \item[$-$] freezes, until seconds device reads message, 
+  	  \item[$-$] limited length of message,
+  	  \item[$-$] requires USB in microcontroller, 
+  	  \item[$-$] complex implementation in microcontroller, 
+  	\end{itemize}
+  \item UART:
+  	\begin{itemize}
+  	  \item[$+$] popularity in microcontrollers,
+  	  \item[$+$] simple implementation in microcontroller,
+  	  \item[$+$] length of message is not limited,
+  	  \item[$+$] doesn't freeze, when message is not received,
+  	  \item[$-$] limited compatibility with smartphones
+  	  \item[$-$] in KL26Z, needs openSDA port for connection through USB cable,
+  	 	so debugger can't be connected using USB
+  	\end{itemize}
+\end{itemize}
+
+Summing up, there is several ways to communicate between smartphone and
+microcontroller, which allows for using smartphone as high-level controller.
+Next step is to check, if this connection can actually allow for extending
+robot's functionality by something not available (or working worse) for
+microcontrollers.

@@ -32,7 +32,7 @@ developed for one of previous projects.
 It was using ``full'' version of OpenCV in C++. 
 Because Android is a different platform, the same method couldn't be used for
 it.
-Fortunately, Android offers few different ways to do it, including:
+Fortunately, Android offers few different ways for face detection, including:
 \begin{itemize}
   \item FaceDetector API,
   \item Camera API,
@@ -146,8 +146,13 @@ also occurred, and not all faces were discovered correctly, but detection was
 working in almost real-time, and quality is still high.]
 
 \section{Summary}
-To compare performance of each method, they should be tested in the same
-conditions. 
+As it was checked, it's possible to track faces using Android, and there's
+several ways to do it. 
+It's also possible to do it in several ways, so they should be compared.
+Methods differ in functionality and ease of usage, but the most important is to
+compare performance.
+
+To have meaningful results, they should be tested in the same conditions.
 Therefore, the same image (\ref{img:faces}) was used for all of them.
 Then, they were tested for different resolutions.
 During configuration of Camera API example, list of available preview size for
@@ -221,7 +226,7 @@ used, depending on requirements:
   	  \item[$+$] no external libraries,
   	  \item[$+$] really fast,
   	  \item[$-$] max 5 faces
-  	  \item[$+$] hard to visualize result on preview,
+  	  \item[$-$] hard to visualize result on preview,
   	\end{itemize}
   \item OpenCV (Java):
 	\begin{itemize}
@@ -238,7 +243,7 @@ used, depending on requirements:
 	\begin{itemize}
   	  \item[$+$] same as in Java, but with better performance and more control,
   	  \item[$-$] same as in Java, but much harder to work with it,
-  	  \item[$-$] no Android Studio support,
+  	  \item[$-$] no Android Studio support.
   	\end{itemize}
 \end{itemize}
 
