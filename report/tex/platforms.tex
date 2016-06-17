@@ -40,7 +40,7 @@ Earlier, development ws done using ADT (Android Development Tools) plugin for
 Eclipse, but now it was replaced by Android Studio (img.
 \ref{img:androidstudio}) based on IntelliJ IDEA.
 \includeimage{androidstudio}{Android Studio}
-It is a great tools, which makes writing code, refactoring, designing layout and
+It is a~great tools, which makes writing code, refactoring, designing layout and
 building application (using Gradle) really easy.
 Unfortunately, it's still new, and many tutorials and are still available only
 for ADT.
@@ -48,10 +48,10 @@ It's especially big problem for development with NDK (Native Development Kit),
 which allows for writing code in C++, and is offering better performance, but is
 still not 100\% supported by Android Studio.
 
-However, it's a problem only with setting up project (which can often be done
+However, it's a~problem only with setting up project (which can often be done
 automatically by Android Studio), and all code remains the same, so it's
 possible to easily find answers to most problems.
-Great place for looking for them is StackOverflow, but there's also a lot of
+Great place for looking for them is StackOverflow, but there's also a~lot of
 blogs and sites dedicated to development on Android.
 
 Next advantage of Android is that usually the same application can be used
@@ -61,16 +61,16 @@ without any changes on different smartphones (as long as they are new enough).
 
 \section{MCU}
 \subsection{Introduction}
-There's a lot of microcontroller manufacturers, and even MCUs from the same one
+There's a~lot of microcontroller manufacturers, and even MCUs from the same one
 can be completely different, so applications need to be designed for specific
 one.
 Freescale's FRDM KL25Z (and when it has broken, almost identical KL26Z, both
 shown on img. \ref{img:MCUs}) was chosen, because it is quite popular,
-\cite{mcu_on_eclipse} is a great blog focused on Freescale's microcontroller and KL25Z in particular, and development, deployment and debugging can be done using
+\cite{mcu_on_eclipse} is a~great blog focused on Freescale's microcontroller and KL25Z in particular, and development, deployment and debugging can be done using
 Eclipse-based CodeWarrior (img. \ref{img:codewarrior}).
 
-CodeWarrior is a great tool, which simplifies a lot configuration of MCU's
-peripherals and functions - each is presented as a ``bean''/component
+CodeWarrior is a~great tool, which simplifies a~lot configuration of MCU's
+peripherals and functions - each is presented as a~``bean''/component
 configurable through GUI.
 Beans with new functionality can be created or imported - lot of them are
 available on \cite{mcu_on_eclipse}, with tutorials how to use them.
@@ -98,15 +98,15 @@ UART.
 \subsection{Communication through UART}
 UART (which stands for Universal Asynchronous Receiver/Transmitter) is actually
 a hardware device used for sequential transmission of bits, but it's quite
-popular to use its name as a type of transmission.
+popular to use its name as a~type of transmission.
 It was implemented based on article 
 \emph{``Tutorial: printf() and ``Hello World!" with the Freedom KL25Z Board''}
 available on \cite{mcu_on_eclipse}.
 MCU receives data and sends it back as long as there is something in its read
-buffer (which is actually a queue).
+buffer (which is actually a~queue).
 
 UART is rather popular among microcontrollers, and KL25/26Z even have it
-virtualized in their USB openSDA port, so it requires only a popular mini USB
+virtualized in their USB openSDA port, so it requires only a~popular mini USB
 cable. 
 Unfortunately this blocks openSDA port for debugger.
 
@@ -115,8 +115,8 @@ USB CDC stands for USB Communications Device Class, and is type of device, which
 can communicate using USB.
 There is also an article on \cite{mcu_on_eclipse}, titled
 \emph{``Tutorial: USB CDC with the KL25Z Freedom Board''},
-how to make MCU a representative of CDC.
+how to make MCU a~representative of CDC.
 
-Implementation is rather complex (easy with using beans, but generates a lot of
+Implementation is rather complex (easy with using beans, but generates a~lot of
 code), but big advantage is fact, that it can use ``normal'' USB port, and
-leaves openSDA one for a debugger.
+leaves openSDA one for a~debugger.

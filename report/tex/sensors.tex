@@ -30,7 +30,7 @@ then turning robot around to make it directly at front.
 Such functionality was implemented for ``Face Follower'' (img. \ref{img:SoA0})
 developed for one of previous projects. 
 It was using ``full'' version of OpenCV in C++. 
-Because Android is a different platform, the same method couldn't be used for
+Because Android is a~different platform, the same method couldn't be used for
 it.
 Fortunately, Android offers few different ways for face detection, including:
 \begin{itemize}
@@ -48,10 +48,10 @@ results were obtained on image from \cite{faces}, shown on img. \ref{img:faces}.
 \section{FaceDetector API}
 First method is FaceDetector API, which is part of Android environment.
 Usage is simple (listing \ref{lst:fdapi}) but the problem is, that it requires
-image as a Bitmap, which is hard to get from a camera.
+image as a~Bitmap, which is hard to get from a~camera.
 \lstinputlisting[float, label=lst:fdapi, caption=Face Detector API]
 {../code_samples/facedetectorapi_sample.java}
-Obtaining frame as a Bitmap actually takes more time than detecting faces on it,
+Obtaining frame as a~Bitmap actually takes more time than detecting faces on it,
 so it was tested on image already in memory.
 Result is shown on img. \ref{img:facedetectorapi} - it can be seen, that it's
 possible to detect many faces (on this image: all 20).
@@ -71,13 +71,13 @@ Actually, it's an API to access camera, and face detecting is only part of it.
 This API is now also deprecated and replaced with Camera2 API, but because newer
 one doesn't work with older Android versions (like version on Xperia Neo), older
 one was used. 
-Configuration of preview is a little complicated, but after that,
-face detection requires only starting it, and defining a method, which should be
+Configuration of preview is a~little complicated, but after that,
+face detection requires only starting it, and defining a~method, which should be
 invoked on each detection. Example is shown in listing \ref{lst:cameraapi}.
 \lstinputlisting[float, label=lst:cameraapi, caption=Camera API]
 {../code_samples/cameraapi_sample.java}
 
-Big plus is a fact, that detection automatically happens in background, so it
+Big plus is a~fact, that detection automatically happens in background, so it
 doesn't freeze application, and that it runs fast (real-time on Moto G).
 On the other hand, it is hard to visualize effects, so during tests it only
 logged result (position, number of detected faces) to console.
@@ -89,17 +89,17 @@ faces.
 Original robot was using OpenCV library on Windows, and it's also available for
 Android, written in Java (actually, only interface is in Java, and there is
 C++ below it).
-Similarly to Windows, it's also hard to make it work, but when it's done, it offers a lot of capabilities.
+Similarly to Windows, it's also hard to make it work, but when it's done, it offers a~lot of capabilities.
 
 It's possible to override method invoked on each frame (listing
 \ref{lst:opencv}), and then do e.g. face detection on it.
 Such approach was not possible in Camera API - it was possible to invoke method
 on each frame, but its face detection couldn't be used in such case.
 OpenCV offers more control, and allows for doing more things with images,
-because it's a whole library created for that matter.
+because it's a~whole library created for that matter.
 It has methods to look for patterns on image using, e.g. Haar cascades.
 It's possible to create own ones, but library also provides several pre-defined
-ones - few different for faces, for eyes, even for face of a cat.
+ones - few different for faces, for eyes, even for face of a~cat.
 In sample code, detection freezes application, but because it's possible to
 control, when and how it's invoked, it's possible to do it in separate thread
 (which was actually done) or even work on few frames simultaneously.
@@ -178,9 +178,9 @@ However, they couldn't be used for other methods.
 Face Detector API doesn't work on camera preview, so file with the same faces
 was used, and scaled to have the same height as resolutions available to Camera API. 
 On the other hand, in OpenCV only maximum width and height could be set, so it
-was set to the same as in Camera API, but actual resolution could be a little
+was set to the same as in Camera API, but actual resolution could be a~little
 smaller.
-Methods working on camera preview were tested with image displayed on a FullHD
+Methods working on camera preview were tested with image displayed on a~FullHD
 computer display.
 
 Average time needed for calculating single frame looks as follows (all values
@@ -252,7 +252,7 @@ it's fastest and simplest.
 FaceDetector API is inappropriate, because it's slow, and useful only for
 working with already captured picture, when Camera API can't be used.
 
-OpenCV is also a good library for face detection, but much more complex
+OpenCV is also a~good library for face detection, but much more complex
 (especially NDK), which is both huge advantage and disadvantage.
-It starts being really useful, when there is a need to make something different
+It starts being really useful, when there is a~need to make something different
 with an image, than face detection, because the rest offers only that.

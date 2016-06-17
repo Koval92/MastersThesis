@@ -2,14 +2,14 @@
 
 \section{Description of problem}
 Nowadays, popularity of robots is on the raise. 
-It's not hard to built a simple one, and Internet is full of tutorials how to
+It's not hard to built a~simple one, and Internet is full of tutorials how to
 build them.
 They are built using specially programmed microcontrollers (MCUs), and simplest
 ones even without any.
 However, MCUs have some limitations:
 \begin{enumerate}
   \item They have limited memory and computational capability.
-  \item They require a lot of low-level configuration and programming.
+  \item They require a~lot of low-level configuration and programming.
   \item Each MCU model requires (at least) slightly different configuration.
   \item It's hard to look for help (e.g. on Stack Overflow,
   \cite{stack_overflow}) for specific MCU.
@@ -32,7 +32,7 @@ commands to MCU as low-level one, should be worth considering, because of:
   \item High-level programming and reduced low-level configuration.
 \end{enumerate}
 
-\section{Goal of a project}
+\section{Goal of a~project}
 Goal of this project is to check, if Android smartphone:
 \begin{itemize}
   \item can communicate with microcontroller,
@@ -51,9 +51,9 @@ Face detection using built-in camera will be used as an example of extending
 MCU's capabilities - it requires both computing power and sensors not available
 in MCU, and there exists several ways to implement this.
 
-As MCU, a Freescale FRDM KL26Z will be used. 
-\cite{mcu_on_eclipse} is a blog dedicated to development on Freescale platform
-(mostly KL25Z, predecessor of KL26Z), and even contains an article how to built a mobile robot on that
+As MCU, a~Freescale FRDM KL26Z will be used. 
+\cite{mcu_on_eclipse} is a~blog dedicated to development on Freescale platform
+(mostly KL25Z, predecessor of KL26Z), and even contains an article how to built a~mobile robot on that
 platform (img. \ref{img:frd_zumo}).
 It has articles how to use most of those MCUs features, however from
 smartphone's point of view, only communication using USB port (KL25Z and KL26Z
@@ -61,7 +61,7 @@ have two of them) is required.
 
 Because of already working solutions on Freescale's MCUs (described in
 State-of-Art section), there is no need to build an actual, working robot - it's
-proven, that those MCUs can be used as a controlling unit of a robot.
+proven, that those MCUs can be used as a~controlling unit of a~robot.
 Therefore, this thesis focuses only on making use of smartphone for detecting
 position of face (as in robot on img. \ref{img:SoA0}, but with Android instead
 of PC) and sending text command to MCU (also as in \ref{img:SoA0}, but on
@@ -97,7 +97,7 @@ It's built on FRDM KL25Z, and Zumo Robot Kit for Arduino - KL25Z (and KL26Z
 probably too) is compatible with it.
 \includeimage{frd_zumo}{FRDM Zumo Robot, \cite{mcu_on_eclipse}}
 
-Another example could be a robot built for one of previous projects - it will be
+Another example could be a~robot built for one of previous projects - it will be
 described later.
 Therefore, it's proven, that this MCU can be used for building (at least simple)
 robots.
@@ -106,13 +106,13 @@ robots.
 Next category are robots controlled by mobile phones, like ones shown on photos
 \ref{img:SoA1}, \ref{img:SoA2} and \ref{img:SoA3}.
 It seems, that all of them all remotely-controlled using another phone -
-clicking on button during phone call with receiver generates a sound, which is received and transformed into
+clicking on button during phone call with receiver generates a~sound, which is received and transformed into
 signal in headphones' port.
 None of examples have any (additional) logic in phone. 
 
 Some examples of robots controlled by additional program on smartphones
 still exist, but most of them either are poorly documented, or are using
-smartphone only as a remote, not part of the robot. 
+smartphone only as a~remote, not part of the robot. 
 
 The best example was line-following (it was also an example of both other
 categories) robot developed by co-students Krzysztof Taborski and Kamil Szyc,
@@ -129,17 +129,17 @@ Android and MCU.
 \subsection{``Followers''}
 Last category of robots are ``Followers'', designed to follow something.
 Most popular ones are rather simple line-followers, which are built for
-tournaments, where they have to finish the route, marked with a single line, in
+tournaments, where they have to finish the route, marked with a~single line, in
 shortest time.
 Another example, much more complicated, could be following face (e.g. during
 video conference) - it can't be realized with simple color detection. 
-It requires a camera and more computational power, than MCUs can offer.
+It requires a~camera and more computational power, than MCUs can offer.
 One of such robots was the one designed for one of previous projects (fig.
 \ref{img:SoA0}). 
 \includeimage{SoA0}{FaceFollower by Michał Kowalski and Adam Ćwik}
 
-It was extremely big one, because it was using a laptop as controller
-and external camera on a tripod, and all of that needed to be placed on a robot.
+It was extremely big one, because it was using a~laptop as controller
+and external camera on a~tripod, and all of that needed to be placed on a~robot.
 It was also using one on Freescale's microprocessors.
 
 Camera was capturing video, application developed for laptop was responsible for

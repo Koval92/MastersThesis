@@ -1,11 +1,11 @@
 \chapter{Communication}
 
 \section{Introduction}
-The most important thing in extending robot's capabilities with a smartphone, is
+The most important thing in extending robot's capabilities with a~smartphone, is
 to connect smartphone with MCU.
 Because chosen MCU supports USB CDC and UART through it's OpenSDA USB port, one
 of possible ways is to do it with USB cable connected to smartphone's micro USB port.
-Next thing is to find a way, which will allow for access to a port, and to send
+Next thing is to find a~way, which will allow for access to a~port, and to send
 a text message through it.
 After research, three ways were found:
 \begin{itemize}
@@ -59,7 +59,7 @@ It should be tested, if this is true also for own applications.
 
 \section{USB Host API}
 First method is USB Host API, which is built-in Android. 
-It's a low-level method, and because of that, it's hard to configure.
+It's a~low-level method, and because of that, it's hard to configure.
 At first, it required finding endpoints which can be used for writing and
 reading, which is realized by many nested-loops.
 Then, usage of controlTransfer(\ldots) method is required, to configure.
@@ -76,7 +76,7 @@ It's synchronous method, so programmer has to care for regular calling of
 reading function.
 In case of echo, it can be done only after sending something, but it can't be
 used, if MCU sends something unexpected, like message about error, or current
-state of a robot.
+state of a~robot.
 Which is even worse, with this type of communication, write causes freeze of
 sender, until other device reads it.
 On the other hand, it means, that message can't be missed.
@@ -109,7 +109,7 @@ previous one at the beginning.]
 \section{USB Serial by mik3y}
 Next method is USB Serial library available on Github of user named mik3y.
 It's seems to be quite popular - it's often mentioned on StackOverflow, and on
-project's page, there is a list of many project using it.
+project's page, there is a~list of many project using it.
 Example usage of library is shown on listing \ref{lst:mik3y}.
 \lstinputlisting[float, label=lst:mik3y, caption=mik3y]
 {../code_samples/mik3y_sample.java}
@@ -181,7 +181,7 @@ It can be also seen, that the same as for 64 chars long message, ending is
 missing, and next message starts with first of missing letters.]
 
 \includeimage{comm/async/async_uart_1}{felHR85, async-UART, 1 letter}
-[\\Received text was correct, but send as only a few messages. 
+[\\Received text was correct, but send as only a~few messages. 
 In async-CDC it was only 2 messages at once, in this case all is send in 2-3.
 Average execution time was about 1.5 ms, which is really faster than using CDC.]
 
@@ -278,7 +278,7 @@ in async-CDC example, few messages were sent together, and in (a)sync-CDC
 exceeding buffer, message was broken into two parts.
 
 It's also worth testing, how smartphone receives messages from MCU.
-It was visualized by putting a semicolon on end of each received block.
+It was visualized by putting a~semicolon on end of each received block.
 
 Results with conclusions can be seen on images
 \ref{img:comm/div/div_async_cdc}-\ref{img:comm/div/div_sync_uart}.
@@ -344,19 +344,19 @@ As it can be seen CDC offers the same performance for all libraries,
 smartphones, and message length, because it transmits whole buffer at once.
 Interesting is fact, that sometimes shorter message needed more time than
 longer.
-It limits message length to size of a buffer, but message is always correct.
-Therefore, if there's a need to send something longer, it should be divided into
+It limits message length to size of a~buffer, but message is always correct.
+Therefore, if there's a~need to send something longer, it should be divided into
 shorter messages, and then merged on the other device.
 
 In case of using UART, longer messages can be sent, because they are send
 byte-by-byte anyway, and buffer is using for queueing them.
-Because of that, in UART there's a need to get received message from smaller
-blocks, so using some marker of message end could be a good solution.
+Because of that, in UART there's a~need to get received message from smaller
+blocks, so using some marker of message end could be a~good solution.
 Another good solution could be sending some checksums, because errors were
 observed during tests (but only for using sync mode with it).
 
 Big disadvantage of UART is also lack of compatibility with older smartphones,
-which is a problem especially because CDC on MCU is a much more complicated
+which is a~problem especially because CDC on MCU is a~much more complicated
 solution, and not every MCU supports it, or even have USB port.
 Advantage is fact, that UART is much more popular, and USB is only one of form,
 it appears on microcontrollers.
@@ -364,7 +364,7 @@ However, doing it though USB openSDA port blocks possibility to use debugger on
 the same port.
 
 Each found library has some advantages and disadvantages, which can be presented
-as a list:
+as a~list:
 \begin{itemize}
   \item USB Host API:
   	\begin{itemize}

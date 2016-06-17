@@ -1,4 +1,4 @@
-\documentclass[openany, draft]{mgr} % TODO change options at the end
+\documentclass[]{mgr} % TODO change options at the end
 
 \usepackage[T1]{fontenc}
 %\usepackage{ae,aecompl} % TODO maybe this one looks better?
@@ -9,12 +9,11 @@
 \usepackage{graphicx}
 \usepackage{url}
 \urlstyle{same} % line breaks in URLs
-\usepackage[justification=justified]{caption}
+\usepackage[justification=centering]{caption}
 \usepackage{amsthm}
 \usepackage{mathtools}
-% TODO uncomment
-% \usepackage[bookmarks=true, breaklinks]{hyperref}  
-% \usepackage[all]{hypcap} % needed to help hyperlinks direct correctly;
+\usepackage[bookmarks=true, breaklinks]{hyperref}  
+\usepackage[all]{hypcap} % needed to help hyperlinks direct correctly;
 \usepackage{listings}
 \usepackage[dvipsnames, table]{xcolor}
 \usepackage{xargs}
@@ -45,8 +44,8 @@
 
 % TODO spell-checking!
 
-\author{Michał Kowalski} % TODO inż.?
-\supervisor{dr inż. Marek Woda} % TODO przecinek? jednostka?
+\author{inż. Michał Kowalski}
+\supervisor{dr inż. Marek Woda, K9, W4}
 \field{Informatyka (INF)}
 \specialisation{Internet Engineering (INE)}
 \title{Smartfon z systemem Android\\jako wysokopoziomowy sterownik robota}
@@ -68,25 +67,16 @@
 \include{summary}
 
 \begin{thebibliography}{99}
-% TODO sort!
 
-\bibitem{mcu_on_eclipse} 
-Erich Styger, MCU on Eclipse,
-\url{mcuoneclipse.com/},
-29.04.2016
+\bibitem{faces}
+123rf.com, Stock Photo - Collage of many different human faces,\\
+\url{http://www.123rf.com/photo_24176012_collage-of-many-different-human-faces.html},\\
+15.06.2016
 
-\bibitem{SoA1}
-Ganeev Singh, Mobile Controlled Robot,\\
-\url{engineersgarage.com/contribution/mobile-controlled-robot},
-\date{29.05.2016}
 
-\bibitem{SoA2}
-Robotics Bible, Mobile Controlled Robot,\\
-\url{roboticsbible.com/project-mobile-controlled-robot-without-microcontroller.html},\\
-\date{29.05.2016}
 
 \bibitem{SoA3}
-Mayoogh Girish, Mobile Controlled Robot,\\
+Girish M., Mobile Controlled Robot,\\
 \url{diyhacking.com/mobile-controlled-robot},
 \date{29.05.2016}
 
@@ -94,28 +84,38 @@ Mayoogh Girish, Mobile Controlled Robot,\\
 Google Inc., Android Reference,
 \url{developer.android.com}
 
+\bibitem{felHR85} 
+Herranz F., UsbSerial,
+\url{github.com/felHR85/UsbSerial},
+20.05.2016
+
 \bibitem{opencv_reference} 
 Itseez Inc., OpenCV Reference,
 \url{http://opencv.org/}
+
+\bibitem{SoA2}
+Robotics Bible, Mobile Controlled Robot,\\
+\url{roboticsbible.com/project-mobile-controlled-robot-without-microcontroller.html},\\
+\date{29.05.2016}
+
+\bibitem{SoA1}
+Singh G., Mobile Controlled Robot,\\
+\url{engineersgarage.com/contribution/mobile-controlled-robot},
+\date{29.05.2016}
 
 \bibitem{stack_overflow} 
 Stack Overflow,
 \url{http://stackoverflow.com/}
 
+\bibitem{mcu_on_eclipse} 
+Styger E., MCU on Eclipse,
+\url{mcuoneclipse.com/},
+29.04.2016
+
 \bibitem{mik3y} 
-Mike Wakerly, usb-serial-for-android,\\
+Wakerly M., usb-serial-for-android,\\
 \url{github.com/mik3y/usb-serial-for-android},
 20.05.2016
-
-\bibitem{felHR85} 
-Felipe Herranz, UsbSerial,
-\url{github.com/felHR85/UsbSerial},
-20.05.2016
-
-\bibitem{faces}
-123rf.com, Stock Photo - Collage of many different human faces,\\
-\url{http://www.123rf.com/photo_24176012_collage-of-many-different-human-faces.html},\\
-15.06.2016
 
 \end{thebibliography}
 \end{document}
